@@ -1,0 +1,41 @@
+.w-100 {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.div-input-auth {
+  display: flex;
+  flex-direction: row;
+  margin-right: 5%;
+  align-items: center;
+  justify-content: center;
+  text-align: start;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.div-input-auth input {
+  background: transparent;
+  outline: none;
+  width: 60%;
+  border-radius: 20px;
+  color: aliceblue;
+  border: 1px solid red;
+  padding: 10px;
+}
+
+.p-alert {
+  color: red;
+  text-align: left;
+  font-size: 12px;
+  text-align: start;
+  width: 60%;
+  margin-left: 4%;
+}
+
+.icon-form-auth {
+  color: red;
+}
