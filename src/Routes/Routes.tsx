@@ -1,8 +1,7 @@
 import Home from "../Pages/Home/Home";
 import Login from "../Pages/Login/Login";
 import Register from "../Pages/Register/Register";
-
-import IsLogaded from "../RouteGuards/IsLogaded";
+import LoggedIn from "../RouteGuards/LoggedIn";
 
 export const Routes = [
   {
@@ -15,7 +14,7 @@ export const Routes = [
   },
   {
     path: "/",
-    element: <IsLogaded />,
+    element: <LoggedIn />,
     children: [
       {
         path: "",

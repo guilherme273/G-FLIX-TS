@@ -62,7 +62,7 @@ const FormRegister: React.FC = () => {
               className="icon-form-auth"
             />
             <input
-              type={"text"}
+              type={"password"}
               placeholder={"Confirme a senha"}
               {...register("confirmPassword", {
                 required: true,

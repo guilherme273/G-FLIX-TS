@@ -5,7 +5,7 @@ import FormLogin from "../../Components/Forms/FormLogin/FormLogin";
 
 import "./Login.Style.css";
 import { CircleUserRound } from "lucide-react";
-import DivNavigateAuth from "../../Components/Forms/DivRegister/DivNavigateAuth";
+import DivNavigateAuth from "../../Components/Forms/DivNavigateAuth/DivNavigateAuth";
 
 const Login: React.FC = () => {
   return (
