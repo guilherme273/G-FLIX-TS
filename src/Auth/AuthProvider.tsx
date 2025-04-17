@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { AuthContext } from "./AuthContext";
 import { User } from "../User/UserInterface";
 import { loginRequest } from "./AuthService";
+import { LoginDTO } from "../User/Login.dto";
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>();
@@ -9,8 +10,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     localStorage.getItem("token")
   );
 
-  const login = async (email: string, password: string) => {
-    const response = await loginRequest(email, password);
+  const login = async (data: LoginDTO) => {
+    const response = await loginRequest(data);
     const { token, user } = response;
 
     setToken(token);

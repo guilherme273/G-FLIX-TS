@@ -1,9 +1,11 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { RegisterDTO } from "../../../User/Register.dto";
+
 import { AtSign, Lock, LockKeyhole, User } from "lucide-react";
 import InputAuth from "../InputAuth/InputAuth";
 import SubmitButton from "../SubmitButton/SubmitButton";
+import { registerUser } from "../../../User/User.Service";
+import { RegisterData } from "../../../User/Register.dto";
 
 const FormRegister: React.FC = () => {
   const {
@@ -11,12 +13,16 @@ const FormRegister: React.FC = () => {
     handleSubmit,
     formState: { errors },
     watch,
-  } = useForm<RegisterDTO>();
+  } = useForm<RegisterData>();
   const matchPassword = watch("password");
 
-  const makeRequest = (data: RegisterDTO) => {
-    console.log(data);
+  const makeRequest = async (data: RegisterData) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { confirmPassword, ...requestData } = data;
+    const response = await registerUser(requestData);
+    console.log(response);
   };
+
   return (
     <>
       <form onSubmit={handleSubmit(makeRequest)} className="formulario-login">

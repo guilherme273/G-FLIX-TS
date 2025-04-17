@@ -1,10 +1,10 @@
-export interface RegisterDTO {
+export interface RegisterData {
   name: string;
   email: string;
   password: string;
   confirmPassword: string;
 }
-export interface RegisterDataDTO {
+export interface RegisterDTO {
   name: string;
   email: string;
   password: string;
