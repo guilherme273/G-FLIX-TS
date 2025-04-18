@@ -3,11 +3,11 @@ import { LoginDTO } from "../User/Login.dto";
 import { User } from "../User/UserInterface";
 
 interface AuthResponse {
-  token: string;
+  access_token: string;
   user: User;
 }
 
 export const loginRequest = async (data: LoginDTO): Promise<AuthResponse> => {
-  const response = await api.post<AuthResponse>("/auth", data);
+  const response = await api.post<AuthResponse>("/signin", data);
   return response.data;
 };

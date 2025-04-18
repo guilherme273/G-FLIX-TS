@@ -5,16 +5,19 @@ import { LoginDTO } from "../../../User/Login.dto";
 import InputAuth from "../InputAuth/InputAuth";
 import "./FormLoginStyle.css";
 import SubmitButton from "../SubmitButton/SubmitButton";
+import { useAuth } from "../../../Auth/UseAuth";
 
 const FormLogin: React.FC = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<LoginDTO>();
 
-  const makeRequest: SubmitHandler<LoginDTO> = (data) => {
-    console.log(data);
+  const { login } = useAuth();
+  const makeRequest: SubmitHandler<LoginDTO> = async (data: LoginDTO) => {
+    const response = await login(data);
+    // console.log(response);
   };
 
   return (
@@ -43,7 +46,7 @@ const FormLogin: React.FC = () => {
               : undefined
           }
         />
-        <SubmitButton text="Entrar" />
+        <SubmitButton disableButton={isSubmitting} text="Entrar" />
       </form>
     </>
   );

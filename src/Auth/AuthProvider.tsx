@@ -12,11 +12,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const login = async (data: LoginDTO) => {
     const response = await loginRequest(data);
-    const { token, user } = response;
+    const { access_token, user } = response;
 
-    setToken(token);
+    setToken(access_token);
     setUser(user);
-    localStorage.setItem("token", token);
+    localStorage.setItem("token", access_token);
+    console.log(token);
+    console.log(user);
   };
 
   const logout = () => {
@@ -25,9 +27,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     localStorage.removeItem("token");
   };
 
-  useEffect(() => {
-    // Aqui você pode validar o token se quiser
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <AuthContext.Provider

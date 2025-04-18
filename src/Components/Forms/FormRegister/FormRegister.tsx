@@ -1,6 +1,5 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-
 import { AtSign, Lock, LockKeyhole, User } from "lucide-react";
 import InputAuth from "../InputAuth/InputAuth";
 import SubmitButton from "../SubmitButton/SubmitButton";
@@ -11,7 +10,7 @@ const FormRegister: React.FC = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     watch,
   } = useForm<RegisterData>();
   const matchPassword = watch("password");
@@ -83,7 +82,7 @@ const FormRegister: React.FC = () => {
             <p className="p-alert">As senhas não conferem</p>
           )}
         </div>
-        <SubmitButton text="Registrar-se" />
+        <SubmitButton disableButton={isSubmitting} text="Registrar-se" />
       </form>
     </>
   );

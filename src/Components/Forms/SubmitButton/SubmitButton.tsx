@@ -3,12 +3,19 @@ import "./SubmitButtonStyle.css";
 
 interface SubmitButtonProps {
   text: string;
+  disableButton: boolean;
 }
 
-const SubmitButton: React.FC<SubmitButtonProps> = ({ text }) => {
+const SubmitButton: React.FC<SubmitButtonProps> = ({ text, disableButton }) => {
   return (
     <>
-      <button className="submit-buttom-auth" type="submit">
+      <button
+        className={
+          disableButton ? "submit-button-auth-disable" : "submit-buttom-auth"
+        }
+        type="submit"
+        disabled={disableButton}
+      >
         {text}
       </button>
     </>
