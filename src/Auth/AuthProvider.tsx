@@ -6,19 +6,20 @@ import { LoginDTO } from "../User/Login.dto";
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>();
+  const [userId, setUserID] = useState<number>();
   const [token, setToken] = useState<string | null>(
     localStorage.getItem("token")
   );
 
   const login = async (data: LoginDTO) => {
     const response = await loginRequest(data);
-    const { access_token, user } = response;
+    const { access_token, userId } = response;
 
     setToken(access_token);
-    setUser(user);
+    setUserID(userId);
     localStorage.setItem("token", access_token);
-    console.log(token);
     console.log(user);
+    console.log(token);
   };
 
   const logout = () => {
@@ -27,11 +28,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     localStorage.removeItem("token");
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    console.log(user);
+    console.log(token);
+  }, []);
 
   return (
     <AuthContext.Provider
-      value={{ user, token, login, logout, isAuthenticated: !!token }}
+      value={{ user, token, login, logout, isAuthenticated: !!token, userId }}
     >
       {children}
     </AuthContext.Provider>

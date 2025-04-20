@@ -4,6 +4,7 @@ import { LoginDTO } from "../User/Login.dto";
 
 interface AuthContextType {
   user: User | null | undefined;
+  userId: number | null | undefined;
   token: string | null;
   login: (data: LoginDTO) => Promise<void>;
   logout: () => void;

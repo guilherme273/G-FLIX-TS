@@ -1,5 +1,6 @@
 import React from "react";
 import "./SubmitButtonStyle.css";
+import Loading from "../../Loading/Loading";
 
 interface SubmitButtonProps {
   text: string;
@@ -16,7 +17,7 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({ text, disableButton }) => {
         type="submit"
         disabled={disableButton}
       >
-        {text}
+        {disableButton ? <Loading color={"red"} size={10} /> : text}
       </button>
     </>
   );

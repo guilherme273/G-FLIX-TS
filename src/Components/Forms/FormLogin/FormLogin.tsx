@@ -17,7 +17,7 @@ const FormLogin: React.FC = () => {
   const { login } = useAuth();
   const makeRequest: SubmitHandler<LoginDTO> = async (data: LoginDTO) => {
     const response = await login(data);
-    // console.log(response);
+    console.log(response);
   };
 
   return (
