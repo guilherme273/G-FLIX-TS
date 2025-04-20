@@ -27,61 +27,74 @@ const FormRegister: React.FC = () => {
       <form onSubmit={handleSubmit(makeRequest)} className="formulario-login">
         <InputAuth
           icon={User}
-          type={"text"}
-          placeholder={"Nome"}
-          inputName={"name"}
+          type="text"
+          placeholder="Nome"
+          inputName="name"
           register={register}
-          error={
-            errors?.name?.type === "required" ? "Nome obrigatório" : undefined
-          }
+          registerOptions={{
+            required: "Nome obrigatório",
+          }}
+          error={errors.name}
         />
 
         <InputAuth
           icon={AtSign}
-          type={"text"}
-          placeholder={"Email"}
-          inputName={"email"}
+          type="text"
+          placeholder="Email"
+          inputName="email"
           register={register}
-          error={
-            errors?.email?.type === "required" ? "Email obrigatório" : undefined
-          }
-        />
-        <InputAuth
-          icon={Lock}
-          type={"password"}
-          placeholder={"Senha"}
-          inputName={"password"}
-          register={register}
-          error={
-            errors?.password?.type === "required"
-              ? "Senha obrigatório"
-              : undefined
-          }
+          registerOptions={{
+            required: "Email obrigatório",
+            pattern: {
+              value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+              message: "Formato de email inválido",
+            },
+          }}
+          error={errors.email}
         />
 
-        <div className="w-100">
-          <div className="div-input-auth">
-            <LockKeyhole
-              size={35}
-              strokeWidth={0.5}
-              className="icon-form-auth"
-            />
-            <input
-              type={"password"}
-              placeholder={"Confirme a senha"}
-              {...register("confirmPassword", {
-                required: true,
-                validate: (value) => value === matchPassword,
-              })}
-            />
-          </div>
-          {errors?.confirmPassword?.type === "required" && (
-            <p className="p-alert">Confirmação de seha obrigatória</p>
-          )}
-          {errors?.confirmPassword?.type === "validate" && (
-            <p className="p-alert">As senhas não conferem</p>
-          )}
-        </div>
+        <InputAuth
+          icon={Lock}
+          type="password"
+          placeholder="Senha"
+          inputName="password"
+          register={register}
+          registerOptions={{
+            required: "Senha obrigatória",
+            minLength: {
+              value: 6,
+              message: "Senha deve ter no mínimo 6 caracteres",
+            },
+            validate: (value) => {
+              const hasUpperCase = /[A-Z]/.test(value);
+              const hasNumber = /[0-9]/.test(value);
+              const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(value);
+
+              if (!hasUpperCase)
+                return "A senha deve conter ao menos uma letra maiúscula";
+              if (!hasNumber) return "A senha deve conter ao menos um número";
+              if (!hasSpecialChar)
+                return "A senha deve conter ao menos um caractere especial";
+
+              return true;
+            },
+          }}
+          error={errors.password}
+        />
+        <InputAuth
+          icon={LockKeyhole}
+          type="password"
+          placeholder="Confirme a senha"
+          inputName="confirmPassword"
+          register={register}
+          registerOptions={{
+            required: "Confirmação obrigatória",
+            validate: (value) =>
+              value === matchPassword || "As senhas não conferem",
+          }}
+          error={errors.confirmPassword}
+        />
+
         <SubmitButton disableButton={isSubmitting} text="Registrar-se" />
       </form>
     </>

@@ -9,7 +9,7 @@ const GeneralSectionAuth: React.FC<GeneralSectionAuthProps> = ({
   children,
 }) => {
   const img = {
-    backgroundImage: "url('/src/assets/login.jpg')",
+    backgroundImage: "url('assets/login.jpg')",
     backgroundSize: "cover",
     backgroundPosition: "center",
   };

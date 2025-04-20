@@ -1,6 +1,6 @@
 import React from "react";
 import { LucideIcon } from "lucide-react";
-import { UseFormRegister } from "react-hook-form";
+import { RegisterOptions, UseFormRegister } from "react-hook-form";
 import "./InputAuthStyle.css";
 
 interface InputAuthProps {
@@ -10,7 +10,11 @@ interface InputAuthProps {
   inputName: "name" | "email" | "password" | "confirmPassword";
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   register: UseFormRegister<any>;
-  error?: string;
+  registerOptions?: RegisterOptions;
+  error?: {
+    type: string;
+    message?: string;
+  };
 }
 
 const InputAuth: React.FC<InputAuthProps> = ({
@@ -19,22 +23,21 @@ const InputAuth: React.FC<InputAuthProps> = ({
   placeholder,
   inputName,
   register,
+  registerOptions,
   error,
 }) => {
   return (
-    <>
-      <div className="w-100">
-        <div className="div-input-auth">
-          {<Icon size={35} strokeWidth={0.5} className="icon-form-auth" />}
-          <input
-            type={type}
-            placeholder={placeholder}
-            {...register(inputName, { required: true })}
-          />
-        </div>
-        {error && <p className="p-alert">{error}</p>}
+    <div className="w-100">
+      <div className="div-input-auth">
+        <Icon size={35} strokeWidth={0.5} className="icon-form-auth" />
+        <input
+          type={type}
+          placeholder={placeholder}
+          {...register(inputName, registerOptions)}
+        />
       </div>
-    </>
+      {error && <p className="p-alert">{error.message}</p>}
+    </div>
   );
 };
 

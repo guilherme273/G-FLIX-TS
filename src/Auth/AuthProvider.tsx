@@ -18,6 +18,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setToken(access_token);
     setUserID(userId);
     localStorage.setItem("token", access_token);
+    localStorage.setItem("user", String(userId));
     console.log(user);
     console.log(token);
   };
@@ -26,6 +27,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setToken(null);
     setUser(null);
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
   };
 
   useEffect(() => {

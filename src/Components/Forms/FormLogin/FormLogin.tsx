@@ -21,34 +21,45 @@ const FormLogin: React.FC = () => {
   };
 
   return (
-    <>
-      <form onSubmit={handleSubmit(makeRequest)} className="formulario-login">
-        <InputAuth
-          icon={AtSign}
-          type={"text"}
-          placeholder={"Email"}
-          inputName={"email"}
-          register={register}
-          error={
-            errors?.email?.type === "required" ? "Email obrigatório" : undefined
-          }
-        />
+    <form onSubmit={handleSubmit(makeRequest)} className="formulario-login">
+      <InputAuth
+        icon={AtSign}
+        type="text"
+        placeholder="Email"
+        inputName="email"
+        register={register}
+        registerOptions={{
+          required: "Email obrigatório",
+          pattern: {
+            value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+            message: "Formato de email inválido",
+          },
+        }}
+        error={
+          errors.email
+            ? { type: errors.email.type, message: errors.email.message }
+            : undefined
+        }
+      />
 
-        <InputAuth
-          icon={LockKeyhole}
-          type={"password"}
-          placeholder={"Senha"}
-          inputName={"password"}
-          register={register}
-          error={
-            errors?.password?.type === "required"
-              ? "Senha obrigatória"
-              : undefined
-          }
-        />
-        <SubmitButton disableButton={isSubmitting} text="Entrar" />
-      </form>
-    </>
+      <InputAuth
+        icon={LockKeyhole}
+        type="password"
+        placeholder="Senha"
+        inputName="password"
+        register={register}
+        registerOptions={{
+          required: "Senha obrigatória",
+        }}
+        error={
+          errors.password
+            ? { type: errors.password.type, message: errors.password.message }
+            : undefined
+        }
+      />
+
+      <SubmitButton disableButton={isSubmitting} text="Entrar" />
+    </form>
   );
 };
 

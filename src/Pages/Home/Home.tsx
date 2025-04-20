@@ -1,12 +1,14 @@
 import React from "react";
 import "./HomeStyle.css";
-import Loading from "../../Components/Loading/Loading";
+import Header from "../../Components/Header/Header";
+import GeneralSection from "../../Components/GeneralSection/GeneralSection";
 
 const Home: React.FC = () => {
   return (
     <>
-      <h1>home</h1>
-      <Loading color={"blue"} size={20} />
+      <GeneralSection>
+        <Header />
+      </GeneralSection>
     </>
   );
 };
