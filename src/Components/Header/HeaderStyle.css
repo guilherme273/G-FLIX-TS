@@ -51,6 +51,9 @@
   gap: 3px;
   cursor: pointer;
 }
+.none {
+  display: none;
+}
 
 @media (min-width: 1px) and (max-width: 600px) {
   .button-mobile-header {
