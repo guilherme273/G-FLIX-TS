@@ -14,6 +14,7 @@
   gap: 1rem;
   flex-direction: row;
   min-height: 70px;
+  z-index: 999;
 }
 
 .div-header {
@@ -67,6 +68,7 @@
     border: 0.1px solid rgba(255, 0, 0, 0.534);
     border-radius: 100%;
     padding: 5px;
+    z-index: 999;
   }
   .header {
     display: none;
@@ -84,6 +86,9 @@
     gap: 1rem;
     flex-direction: column;
     min-height: 70px;
+    border-bottom-right-radius: 20px;
+    border-top-right-radius: 20px;
+    z-index: 999;
   }
   .div-header {
     display: flex;
@@ -95,9 +100,10 @@
     flex-direction: column;
     gap: 1.2rem;
     width: 100%;
+    justify-content: flex-start;
   }
   .link-header {
     border-bottom: 1px solid rgba(255, 0, 0, 0.395);
-    text-align: center;
+    padding-left: 20px;
   }
 }

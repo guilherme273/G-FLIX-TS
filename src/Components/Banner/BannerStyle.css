@@ -1,0 +1,30 @@
+.section-banner {
+  width: 100%;
+  margin-top: 70px; /* compensar header fixo */
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.banner-img {
+  max-width: 100%;
+  height: auto;
+  opacity: 0;
+  position: absolute;
+  transition: opacity 1s ease-in-out;
+  z-index: 0;
+}
+
+.active {
+  opacity: 1;
+  position: relative; /* mostra imagem atual no fluxo normal */
+  z-index: 1;
+}
+
+@media (min-width: 1px) and (max-width: 600px) {
+  .section-banner {
+    margin-top: 0;
+  }
+}
