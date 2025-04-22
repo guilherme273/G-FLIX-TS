@@ -13,3 +13,5 @@ const CategoryesMovie: React.FC<Movie[]> = ({ movies }) => {
     </>
   );
 };
+
+export default CategoryesMovie;
