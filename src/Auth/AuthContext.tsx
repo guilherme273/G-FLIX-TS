@@ -9,6 +9,9 @@ interface AuthContextType {
   login: (data: LoginDTO) => Promise<void>;
   logout: () => void;
   isAuthenticated: boolean;
+  setToken: (token: string | null) => void;
+  setUserID: (userId: number | null | undefined) => void;
+  setUser: (user: User | null | undefined) => void;
 }
 
 export const AuthContext = createContext<AuthContextType>(

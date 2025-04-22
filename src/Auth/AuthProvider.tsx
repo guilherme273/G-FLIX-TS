@@ -5,8 +5,8 @@ import { loginRequest } from "./AuthService";
 import { LoginDTO } from "../User/Login.dto";
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [user, setUser] = useState<User | null>();
-  const [userId, setUserID] = useState<number>();
+  const [user, setUser] = useState<User | null | undefined>();
+  const [userId, setUserID] = useState<number | null | undefined>();
   const [token, setToken] = useState<string | null>(
     localStorage.getItem("token")
   );
@@ -17,27 +17,34 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     setToken(access_token);
     setUserID(userId);
+    console.log("user_id", userId);
     localStorage.setItem("token", access_token);
     localStorage.setItem("user", String(userId));
-    console.log(user);
-    console.log(token);
   };
 
   const logout = () => {
     setToken(null);
     setUser(null);
+    setUser(null);
     localStorage.removeItem("token");
     localStorage.removeItem("user");
   };
 
-  useEffect(() => {
-    console.log(user);
-    console.log(token);
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <AuthContext.Provider
-      value={{ user, token, login, logout, isAuthenticated: !!token, userId }}
+      value={{
+        user,
+        token,
+        login,
+        logout,
+        isAuthenticated: !!token,
+        userId,
+        setToken,
+        setUserID,
+        setUser,
+      }}
     >
       {children}
     </AuthContext.Provider>

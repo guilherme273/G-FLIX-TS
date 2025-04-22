@@ -12,3 +12,8 @@ export const loginRequest = async (data: LoginDTO): Promise<AuthResponse> => {
   toast_fy(response.data);
   return response.data;
 };
+export const is = async () => {
+  const response = await api.post("/isAtuhenticated");
+  toast_fy(response.data);
+  return response.data;
+};
