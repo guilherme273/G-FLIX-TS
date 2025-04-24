@@ -1,0 +1,86 @@
+.div-carousel {
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  gap: 0.5rem;
+  justify-content: flex-start;
+  width: 98%;
+  padding: 30px;
+}
+
+.div-carousel::-webkit-scrollbar {
+  display: none;
+}
+.div-carousel .div-icon-and-link-img {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  position: relative;
+}
+.div-carousel .div-icon-and-link-img .icon {
+  position: absolute;
+  width: 38px;
+  height: 38px;
+  margin: 0px 20px 20px 0px;
+  cursor: pointer;
+  color: aliceblue;
+  background-color: #00000050;
+  padding: 5px;
+  border-radius: 10px;
+}
+.div-carousel .div-icon-and-link-img .icon:hover {
+  background-color: transparent;
+  color: red;
+}
+.info-movie {
+  display: flex;
+  justify-content: flex-start;
+}
+.info-movie p {
+  margin-left: 3px;
+  text-align: start;
+  text-transform: uppercase;
+  font-size: 15px;
+  color: rgba(240, 248, 255, 0.76);
+  padding: 5px;
+}
+
+.card-movie {
+  width: 300px;
+  padding: 3px 3px 30px 3px;
+  background-color: rgba(0, 0, 0, 0.575);
+  border-radius: 20px;
+  transition: transform 0.3s ease;
+  min-height: 340px;
+}
+.card-movie:hover {
+  transform: scale(1.05);
+}
+.div-carousel img {
+  width: 275px;
+  height: auto;
+  object-fit: cover;
+  margin-bottom: 1rem;
+  border-radius: 20px;
+  margin: 0.5rem;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.buttons button {
+  background-color: transparent;
+  margin: none;
+  border: none;
+  cursor: pointer;
+  color: red;
+}
+.buttons button:hover {
+  opacity: 0.5;
+}

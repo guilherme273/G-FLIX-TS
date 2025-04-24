@@ -1,15 +1,22 @@
-interface Movie {
-  id: string;
-  title: string;
-  url: string;
-  cover: string;
+import { Movie } from "../../Movie/MovieInterface";
+import SectionCarousel from "../SectionCarousel/SectionCarousel";
+import "./CategoryesMovieStyle.css";
+
+interface propsCategoryMovie {
+  movies: Movie[];
   category: string;
 }
 
-const CategoryesMovie: React.FC<Movie[]> = ({ movies }) => {
+const CategoryesMovie: React.FC<propsCategoryMovie> = ({
+  movies,
+  category,
+}) => {
   return (
     <>
-      <h1></h1>
+      <section className="category-movie">
+        <h4 className="category-title">{category}</h4>
+        <SectionCarousel movies={movies} />
+      </section>
     </>
   );
 };

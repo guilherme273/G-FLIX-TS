@@ -4,7 +4,7 @@
 
 .header {
   background-color: black;
-  border-bottom: 2px solid red;
+  border-bottom: 1px solid rgba(255, 0, 0, 0.618);
   position: fixed;
   top: 0;
   width: 100%;
@@ -39,6 +39,23 @@
 .link-header {
   text-decoration: none;
   color: aliceblue;
+  padding: 0.5rem;
+  position: relative;
+}
+.link-header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 1px;
+  width: 0%;
+  background-color: red; /* troca a cor se quiser */
+  transition: width 0.5s ease;
+  transform-origin: right;
+}
+
+.link-header:hover::after {
+  width: 100%;
 }
 
 .logout {
@@ -75,7 +92,7 @@
   }
   .header-mobile {
     background-color: black;
-    border-right: 2px solid red;
+    border-bottom: 1px solid rgba(255, 0, 0, 0.618);
     display: flex;
     position: fixed;
     left: 0;

@@ -4,12 +4,15 @@ import { ClipLoader } from "react-spinners";
 interface LoadingProps {
   color: string;
   size: number;
+  padding: number;
 }
 
-const Loading: React.FC<LoadingProps> = ({ color, size }) => {
+const Loading: React.FC<LoadingProps> = ({ padding, color, size }) => {
   return (
     <>
-      <ClipLoader color={color} size={size} />
+      <div style={{ padding: `${padding}px` }}>
+        <ClipLoader color={color} size={size} />
+      </div>
     </>
   );
 };
