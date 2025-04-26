@@ -1,0 +1,9 @@
+import api from "../Api/Axios";
+import { toast_fy } from "../Toast/Toast";
+import { ReactionsDto } from "./Reactions.dto";
+
+export const makeReaction = async (data: ReactionsDto) => {
+  const response = await api.post("/reactions", data);
+  toast_fy(response.data);
+  return response.data;
+};

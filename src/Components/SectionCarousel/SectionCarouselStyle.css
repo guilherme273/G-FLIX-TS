@@ -45,26 +45,37 @@
   font-size: 15px;
   color: rgba(240, 248, 255, 0.76);
   padding: 5px;
+
+  display: -webkit-box;
+  display: box; /* fallback */
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  box-orient: vertical; /* fallback */
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .card-movie {
   width: 300px;
-  padding: 3px 3px 30px 3px;
+  padding: 3px 3px 25px 3px;
   background-color: rgba(0, 0, 0, 0.575);
   border-radius: 20px;
   transition: transform 0.3s ease;
-  min-height: 340px;
+  min-height: 350px;
+  position: relative;
 }
 .card-movie:hover {
   transform: scale(1.05);
 }
-.div-carousel img {
+.div-carousel .img-movie {
   width: 275px;
-  height: auto;
+  height: 155px;
   object-fit: cover;
   margin-bottom: 1rem;
   border-radius: 20px;
   margin: 0.5rem;
+  display: block;
 }
 
 .buttons {
@@ -83,4 +94,102 @@
 }
 .buttons button:hover {
   opacity: 0.5;
+}
+
+.reaction-icons {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  bottom: 2%;
+  /* left: 2%; */
+  gap: 1rem;
+  padding: 5px;
+  /* justify-content: space-around; */
+  width: 100%;
+}
+.reaction-icon {
+  color: white;
+  cursor: pointer;
+  object-fit: contain;
+  width: 35px;
+  height: 35px;
+  padding: 6px;
+  border-radius: 8px;
+  background-color: rgba(82, 82, 82, 0.525);
+}
+
+.like-icon:hover {
+  color: #00a2e8;
+}
+.heart-icon:hover {
+  color: #ed1c24;
+}
+.emoji-icon:hover {
+  color: #ffcc4d;
+}
+
+.img-reaction-icon {
+  cursor: pointer;
+  object-fit: contain;
+  width: 35px;
+  height: 35px;
+  padding: 6px;
+  border-radius: 8px;
+  background-color: rgba(82, 82, 82, 0.525);
+}
+.img-reaction-icon:hover {
+  background-color: transparent;
+}
+
+.image-container {
+  position: relative;
+  display: inline-block;
+}
+
+.icon-play-movie {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  width: 100px;
+  height: 100px;
+  color: rgba(128, 128, 128, 0.453);
+}
+
+.image-container:hover .icon-play-movie {
+  opacity: 1;
+}
+
+.div-favoritos {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  width: 97%;
+}
+
+.icon-favoritos {
+  width: 35px;
+  height: 35px;
+  color: white;
+  cursor: pointer;
+}
+.icon-favoritos:hover {
+  color: #fff200;
+}
+
+.disabled-icon-reaction {
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+.div-count-reaction {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.count-reaction {
+  color: aliceblue;
 }

@@ -7,6 +7,7 @@ import { getMovies } from "../../Movie/Movie.service";
 import { Movies } from "../../Movie/MovieInterface";
 import CategoryesMovie from "../../Components/CategoryesMovies/CategoryesMovie";
 import Loading from "../../Components/Loading/Loading";
+import Footer from "../../Components/Footer/Footer";
 
 const imagesbanner = [
   { prevImg: "image1", url: "/assets/banner-home.png" },
@@ -45,6 +46,7 @@ const Home: React.FC = () => {
           ))
         )}
       </section>
+      <Footer />
     </GeneralSection>
   );
 };

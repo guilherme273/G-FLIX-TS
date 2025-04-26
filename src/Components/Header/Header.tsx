@@ -65,7 +65,7 @@ const Header: React.FC = () => {
           {isAuthenticated ? (
             <button className="logout" onClick={() => leave()}>
               Sair
-              <LogOut color="red" className="icon-logout" />
+              <LogOut className="icon-logout" />
             </button>
           ) : (
             ""

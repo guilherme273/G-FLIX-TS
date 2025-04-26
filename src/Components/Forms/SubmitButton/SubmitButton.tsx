@@ -17,7 +17,7 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({ text, disableButton }) => {
         type="submit"
         disabled={disableButton}
       >
-        {disableButton ? <Loading color={"red"} size={10} /> : text}
+        {disableButton ? <Loading color={"red"} size={10} padding={0} /> : text}
       </button>
     </>
   );
