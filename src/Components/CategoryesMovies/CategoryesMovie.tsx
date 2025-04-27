@@ -5,17 +5,19 @@ import "./CategoryesMovieStyle.css";
 interface propsCategoryMovie {
   movies: Movie[];
   category: string;
+  fethMovies: () => Promise<void>;
 }
 
 const CategoryesMovie: React.FC<propsCategoryMovie> = ({
   movies,
   category,
+  fethMovies,
 }) => {
   return (
     <>
       <section className="category-movie">
         <h4 className="category-title">{category}</h4>
-        <SectionCarousel movies={movies} />
+        <SectionCarousel fethMovies={fethMovies} movies={movies} />
       </section>
     </>
   );

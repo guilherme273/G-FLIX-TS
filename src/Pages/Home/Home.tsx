@@ -17,15 +17,15 @@ const imagesbanner = [
 const Home: React.FC = () => {
   const [categories, setCategories] = useState<Movies[]>([]);
 
+  const fethMovies = async () => {
+    try {
+      const data = await getMovies();
+      setCategories(data.movies);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
-    const fethMovies = async () => {
-      try {
-        const data = await getMovies();
-        setCategories(data.movies);
-      } catch (error) {
-        console.log(error);
-      }
-    };
     fethMovies();
   }, []);
 
@@ -42,6 +42,7 @@ const Home: React.FC = () => {
               key={category.id}
               category={category.name}
               movies={category.movies}
+              fethMovies={fethMovies}
             />
           ))
         )}
