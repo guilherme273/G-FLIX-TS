@@ -10,8 +10,8 @@ import { useAuth } from "../../Auth/UseAuth";
 import { Navigate } from "react-router-dom";
 
 const Login: React.FC = () => {
-  const { isAuthenticated } = useAuth();
-  if (isAuthenticated) {
+  const { isLogged } = useAuth();
+  if (isLogged) {
     return <Navigate to={"/"} />;
   } else {
     return (

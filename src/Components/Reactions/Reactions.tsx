@@ -13,7 +13,7 @@ interface RactionsProps {
 
 const Reactions: React.FC<RactionsProps> = ({ movie, fethMovies }) => {
   const [loadingReaction, setLoadingReaction] = useState<boolean>(false);
-  const { userId } = useAuth();
+  const { getUserID } = useAuth();
 
   const getUserReactionType = (
     reactions: Reaction[],
@@ -29,7 +29,7 @@ const Reactions: React.FC<RactionsProps> = ({ movie, fethMovies }) => {
     setLoadingReaction(true);
     setTimeout(async () => {
       const data = {
-        id_user: userId,
+        id_user: getUserID(),
         id_reactions_type: id_reaction,
         id_movie,
       };
@@ -40,7 +40,7 @@ const Reactions: React.FC<RactionsProps> = ({ movie, fethMovies }) => {
     }, 3000);
   };
 
-  const userReactionType = getUserReactionType(movie.reactions, userId);
+  const userReactionType = getUserReactionType(movie.reactions, getUserID());
   return (
     <>
       <div className="reaction-icons">

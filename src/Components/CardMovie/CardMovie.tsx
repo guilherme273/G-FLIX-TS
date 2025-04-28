@@ -14,7 +14,7 @@ interface CardMovieProps {
 }
 
 const CardMovie: React.FC<CardMovieProps> = ({ movie, fethMovies }) => {
-  const { userId } = useAuth();
+  const { getUserID } = useAuth();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const addFavorites = (id_movie: number) => {
@@ -22,7 +22,7 @@ const CardMovie: React.FC<CardMovieProps> = ({ movie, fethMovies }) => {
     setTimeout(async () => {
       const data = {
         id_movie,
-        id_user: userId,
+        id_user: getUserID(),
       };
       await addOrRemoveToFavorites(data);
       await fethMovies();
@@ -31,7 +31,7 @@ const CardMovie: React.FC<CardMovieProps> = ({ movie, fethMovies }) => {
   };
 
   const isFavorited = movie.favorites.some(
-    (favorite) => favorite.id_user === userId
+    (favorite) => favorite.id_user === getUserID()
   );
   return (
     <>

@@ -1,51 +1,43 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { AuthContext } from "./AuthContext";
-import { User } from "../User/UserInterface";
 import { loginRequest } from "./AuthService";
 import { LoginDTO } from "../User/Login.dto";
+import { jwtDecode } from "jwt-decode";
+import { DecodedToken } from "./Jwt";
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [user, setUser] = useState<User | null | undefined>();
-  const [userId, setUserID] = useState<number | null | undefined>(
-    Number(localStorage.getItem("user"))
-  );
-  const [token, setToken] = useState<string | null>(
-    localStorage.getItem("token")
-  );
+  const [isLogged, setisLogged] = useState<boolean>(false);
 
   const login = async (data: LoginDTO) => {
     const response = await loginRequest(data);
-    const { access_token, userId } = response;
-
-    setToken(access_token);
-    setUserID(userId);
-    console.log("user_id", userId);
+    const { access_token } = response;
     localStorage.setItem("token", access_token);
-    localStorage.setItem("user", String(userId));
+    if (access_token) {
+      setisLogged(true);
+    }
   };
 
   const logout = () => {
-    setToken(null);
-    setUser(null);
-    setUser(null);
     localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    setisLogged(false);
   };
 
-  useEffect(() => {}, []);
+  const getUserID = () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decoded: DecodedToken = jwtDecode(token);
+      return decoded.sub;
+    }
+  };
 
   return (
     <AuthContext.Provider
       value={{
-        user,
-        token,
         login,
         logout,
-        isAuthenticated: !!token,
-        userId,
-        setToken,
-        setUserID,
-        setUser,
+        isLogged,
+        setisLogged,
+        getUserID,
       }}
     >
       {children}

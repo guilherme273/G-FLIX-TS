@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import "./HeaderStyle.css";
 
 const Header: React.FC = () => {
-  const { logout, isAuthenticated } = useAuth();
+  const { logout } = useAuth();
   const [showMObileHeader, setShowMObileHeader] = useState<boolean>(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -62,14 +62,10 @@ const Header: React.FC = () => {
           </Link>
         </div>
         <div className="div-header">
-          {isAuthenticated ? (
-            <button className="logout" onClick={() => leave()}>
-              Sair
-              <LogOut className="icon-logout" />
-            </button>
-          ) : (
-            ""
-          )}
+          <button className="logout" onClick={() => leave()}>
+            Sair
+            <LogOut className="icon-logout" />
+          </button>
         </div>
       </header>
     </>
