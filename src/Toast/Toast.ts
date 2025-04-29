@@ -6,7 +6,6 @@ export function toast_fy(data: any) {
 
   if (message && typeof message === "object") {
     const { type, content } = message;
-    console.log("toast", data);
     if (type === "success") toast.success(content);
     else if (type === "error") toast.error(content);
     else if (type === "info") toast.info(content);

@@ -1,26 +1,11 @@
-import { Injectable } from '@nestjs/common';
-import { CreateAdminDto } from './dto/create-admin.dto';
-import { UpdateAdminDto } from './dto/update-admin.dto';
+import api from "../Api/Axios";
 
-@Injectable()
-export class AdminService {
-  create(createAdminDto: CreateAdminDto) {
-    return 'This action adds a new admin';
+export const adminGuard = async (): Promise<boolean> => {
+  try {
+    const response = await api.get<boolean>("/admin");
+    return response.data; // true ou false vindo do back
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (error) {
+    return false;
   }
-
-  findAll() {
-    return `This action returns all admin`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} admin`;
-  }
-
-  update(id: number, updateAdminDto: UpdateAdminDto) {
-    return `This action updates a #${id} admin`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} admin`;
-  }
-}
+};

@@ -22,7 +22,6 @@ const CardMovie: React.FC<CardMovieProps> = ({ movie, fethMovies }) => {
     setTimeout(async () => {
       const data = {
         id_movie,
-        id_user: getUserID(),
       };
       await addOrRemoveToFavorites(data);
       await fethMovies();

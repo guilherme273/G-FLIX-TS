@@ -38,4 +38,19 @@
 
 .icon-form-auth {
   color: red;
+  width: 35px;
+  height: 35px;
+}
+
+@media (min-width: 1px) and (max-width: 550px) {
+  .div-input-auth {
+    gap: 0.1rem;
+  }
+  .div-input-auth input {
+    width: 80%;
+  }
+  .icon-form-auth {
+    width: 30px;
+    height: 30px;
+  }
 }

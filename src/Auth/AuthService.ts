@@ -12,3 +12,13 @@ export const loginRequest = async (data: LoginDTO): Promise<AuthResponse> => {
   toast_fy(response.data);
   return response.data;
 };
+
+export const authGuard = async (): Promise<boolean> => {
+  try {
+    const response = await api.get<boolean>("/auth");
+    return response.data;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (error) {
+    return false;
+  }
+};

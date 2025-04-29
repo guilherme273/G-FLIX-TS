@@ -29,7 +29,7 @@ const InputAuth: React.FC<InputAuthProps> = ({
   return (
     <div className="w-100">
       <div className="div-input-auth">
-        <Icon size={35} strokeWidth={0.5} className="icon-form-auth" />
+        <Icon strokeWidth={0.5} className="icon-form-auth" />
         <input
           type={type}
           placeholder={placeholder}

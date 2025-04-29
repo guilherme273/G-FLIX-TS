@@ -4,24 +4,23 @@ import { useEffect, useState } from "react";
 import Loading from "../Components/Loading/Loading";
 import GeneralSection from "../Components/GeneralSection/GeneralSection";
 import Footer from "../Components/Footer/Footer";
+import { adminGuard } from "../Admin/Admin.service";
 
-import { authGuard } from "../Auth/AuthService";
-
-const LoggedIn: React.FC = () => {
-  const [isLogged, setisLogged] = useState<boolean | null>(null);
+const IsAdmin: React.FC = () => {
+  const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
 
   useEffect(() => {
-    const checkIsLogged = async () => {
+    const checkAdmin = async () => {
       setTimeout(async () => {
-        const result = await authGuard();
-        setisLogged(result);
+        const result = await adminGuard();
+        setIsAdmin(result);
       }, 3000);
     };
 
-    checkIsLogged();
+    checkAdmin();
   }, []);
 
-  if (isLogged === null) {
+  if (isAdmin === null) {
     return (
       <GeneralSection>
         <div className="section-loading">
@@ -32,7 +31,7 @@ const LoggedIn: React.FC = () => {
     );
   }
 
-  return isLogged ? <Outlet /> : <Navigate to="/login" />;
+  return isAdmin ? <Outlet /> : <Navigate to="/login" />;
 };
 
-export default LoggedIn;
+export default IsAdmin;

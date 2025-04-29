@@ -29,7 +29,6 @@ const Reactions: React.FC<RactionsProps> = ({ movie, fethMovies }) => {
     setLoadingReaction(true);
     setTimeout(async () => {
       const data = {
-        id_user: getUserID(),
         id_reactions_type: id_reaction,
         id_movie,
       };
