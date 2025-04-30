@@ -3,17 +3,3 @@
   margin: 0;
   box-sizing: border-box;
 }
-
-.section-loading {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: calc(100vh - 104px);
-  background-color: #191919;
-}
-@media (min-width: 1px) and (max-width: 446px) {
-  .section-loading {
-    height: calc(100vh - 131px);
-  }
-}

@@ -43,7 +43,7 @@ const Header: React.FC = () => {
       >
         <div className="div-header">
           <Link to="/" className="link-logo">
-            G Flix
+            <img src="/assets/logo-g.png" className="logo-g-flix" alt="" />
           </Link>
         </div>
         <div className="div-header-nav">

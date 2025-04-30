@@ -5,7 +5,8 @@ const Footer: React.FC = () => {
   return (
     <footer className="footer">
       <h3>
-        <p className="logo-footer">G Flix</p> © Desenvolvido Por
+        <img src="/assets/logo-g.png" className="logo-g-flix-footer" alt="" /> ©
+        Desenvolvido Por
         <Link
           title="Portifólio do Programador"
           className="link-portifolio"

@@ -1,11 +1,8 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-import Loading from "../Components/Loading/Loading";
-import GeneralSection from "../Components/GeneralSection/GeneralSection";
-import Footer from "../Components/Footer/Footer";
-
 import { authGuard } from "../Auth/AuthService";
+import GeneralLoading from "../Components/Loading/GeneralLoading";
 
 const LoggedIn: React.FC = () => {
   const [isLogged, setisLogged] = useState<boolean | null>(null);
@@ -22,14 +19,7 @@ const LoggedIn: React.FC = () => {
   }, []);
 
   if (isLogged === null) {
-    return (
-      <GeneralSection>
-        <div className="section-loading">
-          <Loading color={"red"} size={50} padding={10} />
-        </div>
-        <Footer />
-      </GeneralSection>
-    );
+    return <GeneralLoading />;
   }
 
   return isLogged ? <Outlet /> : <Navigate to="/login" />;

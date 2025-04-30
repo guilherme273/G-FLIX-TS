@@ -11,7 +11,7 @@ const Register: React.FC = () => {
     <>
       <GeneralSectionAuth>
         <CenterSquare>
-          <h2 className="title-login">G Flix</h2>
+          <img src="/assets/logo-g.png" className="logo-g-flix-login" alt="" />
           {/* <UserPen className="icon-user" size={150} strokeWidth={0.5} /> */}
           <FormRegister />
           <DivNavigateAuth

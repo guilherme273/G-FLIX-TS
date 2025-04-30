@@ -29,11 +29,10 @@
 }
 
 .link-logo {
-  color: red;
-  text-decoration: none;
-  font-size: 50px;
-  font-weight: bold;
-  text-align: center;
+}
+
+.logo-g-flix {
+  width: 100px;
 }
 
 .link-header {

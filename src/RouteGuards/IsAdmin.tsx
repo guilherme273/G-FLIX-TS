@@ -1,10 +1,8 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-import Loading from "../Components/Loading/Loading";
-import GeneralSection from "../Components/GeneralSection/GeneralSection";
-import Footer from "../Components/Footer/Footer";
 import { adminGuard } from "../Admin/Admin.service";
+import GeneralLoading from "../Components/Loading/GeneralLoading";
 
 const IsAdmin: React.FC = () => {
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
@@ -21,14 +19,7 @@ const IsAdmin: React.FC = () => {
   }, []);
 
   if (isAdmin === null) {
-    return (
-      <GeneralSection>
-        <div className="section-loading">
-          <Loading color={"red"} size={50} padding={10} />
-        </div>
-        <Footer />
-      </GeneralSection>
-    );
+    return <GeneralLoading />;
   }
 
   return isAdmin ? <Outlet /> : <Navigate to="/login" />;

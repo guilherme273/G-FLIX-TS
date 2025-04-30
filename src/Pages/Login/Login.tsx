@@ -18,7 +18,11 @@ const Login: React.FC = () => {
       <>
         <GeneralSectionAuth>
           <CenterSquare>
-            <h2 className="title-login">G Flix</h2>
+            <img
+              src="/assets/logo-g.png"
+              className="logo-g-flix-login"
+              alt=""
+            />
             <CircleUserRound
               className="icon-user"
               size={150}

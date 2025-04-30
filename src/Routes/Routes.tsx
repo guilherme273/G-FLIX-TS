@@ -1,4 +1,4 @@
-import Teste from "../Components/teste";
+import Overview from "../Pages/Admin/Overview/Overview";
 import Home from "../Pages/Home/Home";
 import Login from "../Pages/Login/Login";
 import NotFound404 from "../Pages/NotFound404/NotFound404";
@@ -31,7 +31,7 @@ export const Routes = [
     children: [
       {
         path: "",
-        element: <Teste />,
+        element: <Overview />,
       },
     ],
   },
