@@ -1,6 +1,7 @@
 .register-login {
-  padding-bottom: 10px;
   display: flex;
+  position: absolute;
+  bottom: 0;
 }
 .register-login .text-register-login {
   color: aliceblue;

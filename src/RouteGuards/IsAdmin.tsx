@@ -1,4 +1,4 @@
-import { Navigate, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import { adminGuard } from "../Admin/Admin.service";
@@ -9,10 +9,8 @@ const IsAdmin: React.FC = () => {
 
   useEffect(() => {
     const checkAdmin = async () => {
-      setTimeout(async () => {
-        const result = await adminGuard();
-        setIsAdmin(result);
-      }, 3000);
+      const result = await adminGuard();
+      setIsAdmin(result);
     };
 
     checkAdmin();
@@ -22,7 +20,7 @@ const IsAdmin: React.FC = () => {
     return <GeneralLoading />;
   }
 
-  return isAdmin ? <Outlet /> : <Navigate to="/login" />;
+  return isAdmin ? <Outlet /> : <GeneralLoading />;
 };
 
 export default IsAdmin;

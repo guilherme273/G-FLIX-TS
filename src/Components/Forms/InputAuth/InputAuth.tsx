@@ -34,6 +34,7 @@ const InputAuth: React.FC<InputAuthProps> = ({
           type={type}
           placeholder={placeholder}
           {...register(inputName, registerOptions)}
+          className="input-auth"
         />
       </div>
       {error && <p className="p-alert">{error.message}</p>}

@@ -3,10 +3,11 @@
   flex-direction: row;
   overflow-x: auto;
   scroll-behavior: smooth;
-  gap: 0.5rem;
   justify-content: flex-start;
-  width: 98%;
-  padding: 30px;
+  gap: 0.2rem;
+  width: 100%;
+  padding-block: 2rem;
+  box-sizing: border-box;
 }
 
 .div-carousel::-webkit-scrollbar {

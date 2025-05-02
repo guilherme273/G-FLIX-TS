@@ -1,5 +1,6 @@
 import { Favorites } from "../Favorites/FavoritesInterface";
 import { Reaction } from "../Reactions/ReactionsInterface";
+import { Views } from "../ViewsMovies/ViewsMoviesInterface";
 
 export interface Movie {
   id: number;
@@ -13,6 +14,7 @@ export interface Movie {
     [reactionTypeId: number]: number;
   };
   favorites: Favorites[];
+  views: Views[];
 }
 
 export interface Movies {

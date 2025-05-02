@@ -7,6 +7,7 @@ import { addOrRemoveToFavorites } from "../../Favorites/Favorites.service";
 import "./CardMovieStyle.css";
 import { useState } from "react";
 import Loading from "../Loading/Loading";
+import { addToViews } from "../../ViewsMovies/ViewsMovies.service";
 
 interface CardMovieProps {
   movie: Movie;
@@ -17,16 +18,22 @@ const CardMovie: React.FC<CardMovieProps> = ({ movie, fethMovies }) => {
   const { getUserID } = useAuth();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const addFavorites = (id_movie: number) => {
+  const addFavorites = async (id_movie: number) => {
     setIsLoading(true);
-    setTimeout(async () => {
-      const data = {
-        id_movie,
-      };
-      await addOrRemoveToFavorites(data);
-      await fethMovies();
-      setIsLoading(false);
-    }, 3000);
+
+    const data = {
+      id_movie,
+    };
+    await addOrRemoveToFavorites(data);
+    await fethMovies();
+    setIsLoading(false);
+  };
+
+  const addView = async (id_movie: number) => {
+    const data = {
+      id_movie,
+    };
+    await addToViews(data);
   };
 
   const isFavorited = movie.favorites.some(
@@ -36,6 +43,10 @@ const CardMovie: React.FC<CardMovieProps> = ({ movie, fethMovies }) => {
     <>
       <div key={movie.id} className="card-movie">
         <div className="div-favoritos">
+          <p className="views-count">
+            {movie.views.length}{" "}
+            {`${movie.views.length === 1 ? "Visualização" : "Visualizações"}`}
+          </p>
           {isLoading ? (
             <Loading color={"red"} size={20} padding={5} />
           ) : isFavorited ? (
@@ -56,7 +67,11 @@ const CardMovie: React.FC<CardMovieProps> = ({ movie, fethMovies }) => {
           )}
         </div>
         <div className="div-icon-and-link-img">
-          <Link to={"/assistir"} className="image-container">
+          <Link
+            onClick={() => addView(movie.id)}
+            to={"/assistir"}
+            className="image-container"
+          >
             <img src={movie.cover} alt="Capa" className="img-movie" />
             <CirclePlay className="icon-play-movie" />
           </Link>

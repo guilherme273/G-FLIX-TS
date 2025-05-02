@@ -42,6 +42,10 @@
   height: 35px;
 }
 
+.input-auth {
+  height: 44px;
+}
+
 @media (min-width: 1px) and (max-width: 550px) {
   .div-input-auth {
     gap: 0.1rem;

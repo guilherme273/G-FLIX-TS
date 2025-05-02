@@ -1,17 +1,39 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useAuth } from "../../Auth/UseAuth";
-import { AlignJustify, LogOut } from "lucide-react";
-import { Link } from "react-router-dom";
+import {
+  AlignJustify,
+  Home,
+  KeyRound,
+  LogOut,
+  Search,
+  Star,
+} from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 import "./HeaderStyle.css";
+import { User } from "../../User/UserInterface";
+import { getUser } from "../../User/User.Service";
 
 const Header: React.FC = () => {
   const { logout } = useAuth();
   const [showMObileHeader, setShowMObileHeader] = useState<boolean>(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useState<boolean>(false);
+  const navigate = useNavigate();
+  const [user, setUser] = useState<User | null | undefined>(null);
 
-  const leave = (): void => {
+  const leave = async () => {
     logout();
+    navigate("/login");
   };
+
+  const fethGetUser = async () => {
+    const data = await getUser();
+    console.log(data);
+    setUser(data);
+  };
+  useEffect(() => {
+    fethGetUser();
+  }, []);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent): void {
@@ -48,24 +70,60 @@ const Header: React.FC = () => {
         </div>
         <div className="div-header-nav">
           <Link className="link-header" to="/">
+            <Home className="icon-link-header" />
             Home
           </Link>
 
           <Link className="link-header" to="/pesquisar">
+            <Search className="icon-link-header" />
             Pesquisar
           </Link>
           <Link className="link-header" to="/Favoritos">
+            <Star className="icon-link-header" />
             Favoritos
           </Link>
-          <Link className="link-header" to="/add-videos">
-            Adicionar video
-          </Link>
         </div>
+
         <div className="div-header">
-          <button className="logout" onClick={() => leave()}>
-            Sair
-            <LogOut className="icon-logout" />
-          </button>
+          <div
+            className="div-user-header-content"
+            onClick={() => setOpen(!open)}
+            role="button"
+            aria-expanded={open}
+            aria-controls="dropdown-menu"
+          >
+            <span className="span-first-letter-name-user">G</span>
+          </div>
+
+          {open && (
+            <div
+              className={`${
+                showMObileHeader ? "dropdown-menu-mobile" : "dropdown-menu"
+              }`}
+            >
+              {showMObileHeader ? (
+                ""
+              ) : (
+                <div className="div-email-user-header">
+                  <p className="email-user-header">{user?.email}</p>
+                </div>
+              )}
+
+              <div>
+                <button className="button-menu-user-header">
+                  <KeyRound className="icon-link-header" />
+                  Trocar senha
+                </button>
+                <button
+                  className="button-menu-user-header"
+                  onClick={() => leave()}
+                >
+                  <LogOut className="icon-link-header" />
+                  Sair
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </header>
     </>

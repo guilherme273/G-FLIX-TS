@@ -1,12 +1,15 @@
+.container-reactions {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  bottom: 2%;
+}
+
 .reaction-icons {
   display: flex;
   flex-direction: row;
-  position: absolute;
-  bottom: 2%;
-  /* left: 2%; */
   gap: 1rem;
   padding: 5px;
-  /* justify-content: space-around; */
   width: 100%;
 }
 .reaction-icon {
@@ -59,4 +62,8 @@
 }
 .count-reaction {
   color: aliceblue;
+}
+
+.branco {
+  color: white;
 }

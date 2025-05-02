@@ -13,7 +13,7 @@
   align-items: center;
   gap: 1rem;
   flex-direction: row;
-  min-height: 70px;
+  min-height: 75px;
   z-index: 999;
 }
 
@@ -21,11 +21,12 @@
   display: flex;
   flex-direction: row;
   gap: 1.2rem;
+  position: relative;
 }
 .div-header-nav {
   display: flex;
   flex-direction: row;
-  gap: 1.2rem;
+  gap: 2rem;
 }
 
 .link-logo {
@@ -40,6 +41,13 @@
   color: aliceblue;
   padding: 0.5rem;
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.link-header:hover {
+  color: rgb(122, 129, 135);
 }
 .link-header::after {
   content: "";
@@ -57,22 +65,90 @@
   width: 100%;
 }
 
-.logout {
+.none {
+  display: none;
+}
+
+.div-user-header {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  background: none;
-  color: aliceblue;
-  border: none;
   gap: 3px;
+}
+.div-user-header-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 35px;
+  height: 35px;
+  background-color: red;
+  border-radius: 50%;
   cursor: pointer;
+  position: relative;
 }
-.logout:hover {
-  color: rgb(147, 147, 147);
+
+.span-first-letter-name-user {
+  color: aliceblue;
+  font-weight: 600;
+  font-size: 20px;
+  position: absolute;
 }
-.none {
-  display: none;
+
+.dropdown-menu {
+  position: absolute;
+  top: 40px; /* abaixo da bolinha */
+  right: -310%;
+  background-color: black;
+  border: 1px solid rgba(255, 0, 0, 0.249);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 8px 0;
+  z-index: 100;
+  min-width: 180px;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.button-menu-user-header {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding: 10px 16px;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  color: aliceblue;
+  gap: 10px;
+}
+
+.button-menu-user-header:hover {
+  background-color: rgb(27, 27, 27);
+  color: rgb(122, 129, 135);
+}
+.button-menu-user-header:hover .icon-link-header {
+  color: red;
+}
+
+.icon-link-header {
+  color: aliceblue;
+}
+.link-header:hover .icon-link-header {
+  color: red;
+}
+
+.email-user-header {
+  display: flex;
+  flex-wrap: wrap;
+  color: aliceblue;
+  font-size: 15px;
+  padding-inline: 10px;
+}
+.div-email-user-header {
+  display: flex;
 }
 
 @media (min-width: 1px) and (max-width: 600px) {
@@ -126,6 +202,63 @@
   .link-header {
     border-bottom: 1px solid rgba(255, 0, 0, 0.395);
     padding-left: 20px;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 2rem;
+  }
+
+  .link-header::after {
+    display: none;
+  }
+
+  .link-header:hover::after {
+    display: none;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 1114px) {
+  .dropdown-menu {
+    right: -70%;
+  }
+}
+@media (min-width: 328px) and (max-width: 600px) {
+  .dropdown-menu-mobile {
+    position: absolute;
+    top: -153px; /* abaixo da bolinha */
+    right: -200%;
+    background-color: black;
+    border: 1px solid rgba(255, 0, 0, 0.249);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 8px 0;
+    z-index: 100;
+    min-width: 180px;
+    min-height: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+}
+@media (min-width: 1px) and (max-width: 328px) {
+  .dropdown-menu-mobile {
+    position: absolute;
+    top: -153px; /* abaixo da bolinha */
+    right: -150%;
+    background-color: black;
+    border: 1px solid rgba(255, 0, 0, 0.249);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 8px 0;
+    z-index: 100;
+    min-width: 150px;
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 }
 

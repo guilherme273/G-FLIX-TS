@@ -1,10 +1,12 @@
 import api from "../Api/Axios";
-import { toast_fy } from "../Toast/Toast";
+import { toast_fy } from "../Utils/Toast/Toast";
 import { LoginDTO } from "../User/Login.dto";
+import { User } from "../User/UserInterface";
 
 interface AuthResponse {
   access_token: string;
   userId: number;
+  user: User;
 }
 
 export const loginRequest = async (data: LoginDTO): Promise<AuthResponse> => {

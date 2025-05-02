@@ -26,12 +26,13 @@
   background-color: rgba(0, 0, 0, 0.575);
   border-radius: 20px;
   transition: transform 0.3s ease;
-  min-height: 350px;
+  min-height: 400px;
   position: relative;
+  flex: 0 0 auto; /* Impede que os cards encolham ou cresçam */
 }
 .card-movie:hover {
   transform: scale(1.05);
-  box-shadow: 0 8px 18px;
+  box-shadow: 0 6px 16px;
 }
 .div-carousel .img-movie {
   width: 275px;
@@ -57,7 +58,7 @@
   transition: opacity 0.3s ease;
   width: 100px;
   height: 100px;
-  color: rgba(128, 128, 128, 0.453);
+  color: rgba(111, 111, 111, 0.849);
 }
 
 .image-container:hover .icon-play-movie {
@@ -69,6 +70,13 @@
   justify-content: end;
   align-items: center;
   width: 97%;
+  position: relative;
+}
+
+.views-count {
+  position: absolute;
+  left: 3%;
+  color: aliceblue;
 }
 
 .icon-favoritos {

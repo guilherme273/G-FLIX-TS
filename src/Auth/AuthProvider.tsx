@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AuthContext } from "./AuthContext";
 import { loginRequest } from "./AuthService";
 import { LoginDTO } from "../User/Login.dto";
@@ -12,6 +12,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const response = await loginRequest(data);
     const { access_token } = response;
     localStorage.setItem("token", access_token);
+
     if (access_token) {
       setisLogged(true);
     }
@@ -29,6 +30,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       return decoded.sub;
     }
   };
+
+  useEffect(() => {
+    const loggedin = localStorage.getItem("token");
+    if (loggedin) {
+      setisLogged(true);
+    } else {
+      setisLogged(false);
+    }
+    console.log(isLogged);
+  }, [isLogged]);
 
   return (
     <AuthContext.Provider

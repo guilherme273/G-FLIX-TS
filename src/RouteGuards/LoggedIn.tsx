@@ -1,4 +1,4 @@
-import { Navigate, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import { authGuard } from "../Auth/AuthService";
@@ -9,10 +9,8 @@ const LoggedIn: React.FC = () => {
 
   useEffect(() => {
     const checkIsLogged = async () => {
-      setTimeout(async () => {
-        const result = await authGuard();
-        setisLogged(result);
-      }, 3000);
+      const result = await authGuard();
+      setisLogged(result);
     };
 
     checkIsLogged();
@@ -22,7 +20,7 @@ const LoggedIn: React.FC = () => {
     return <GeneralLoading />;
   }
 
-  return isLogged ? <Outlet /> : <Navigate to="/login" />;
+  return isLogged ? <Outlet /> : <GeneralLoading />;
 };
 
 export default LoggedIn;

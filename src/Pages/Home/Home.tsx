@@ -18,14 +18,12 @@ const Home: React.FC = () => {
   const [categories, setCategories] = useState<Movies[]>([]);
 
   const fethMovies = async () => {
-    setTimeout(async () => {
-      try {
-        const data = await getMovies();
-        setCategories(data.movies);
-      } catch (error) {
-        console.log(error);
-      }
-    }, 3000);
+    try {
+      const data = await getMovies();
+      setCategories(data.movies);
+    } catch (error) {
+      console.log(error);
+    }
   };
   useEffect(() => {
     fethMovies();
@@ -37,7 +35,7 @@ const Home: React.FC = () => {
       <Banner images={imagesbanner} />
       <section className="container-home">
         {categories.length === 0 ? (
-          <Loading padding={100} color="red" size={100} />
+          <Loading padding={300} color="red" size={100} />
         ) : (
           categories.map((category) => (
             <CategoryesMovie
