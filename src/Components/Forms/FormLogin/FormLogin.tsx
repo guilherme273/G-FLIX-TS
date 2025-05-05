@@ -5,7 +5,7 @@ import { LoginDTO } from "../../../User/Login.dto";
 import InputAuth from "../InputAuth/InputAuth";
 import "./FormLoginStyle.css";
 import SubmitButton from "../SubmitButton/SubmitButton";
-import { useAuth } from "../../../Auth/UseAuth";
+import { useAuth } from "../../../Contexts/Auth/UseAuth";
 
 const FormLogin: React.FC = () => {
   const {

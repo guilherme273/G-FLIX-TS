@@ -1,21 +1,22 @@
-import { CirclePlay, Star } from "lucide-react";
+import { CirclePlay, Eye, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 import Reactions from "../Reactions/Reactions";
-import { Movie } from "../../Movie/MovieInterface";
-import { useAuth } from "../../Auth/UseAuth";
+import { useAuth } from "../../Contexts/Auth/UseAuth";
 import { addOrRemoveToFavorites } from "../../Favorites/Favorites.service";
-import "./CardMovieStyle.css";
 import { useState } from "react";
 import Loading from "../Loading/Loading";
 import { addToViews } from "../../ViewsMovies/ViewsMovies.service";
+import { Movie } from "../../Contexts/Movies/MovieInterface";
+import { useMovies } from "../../Contexts/Movies/useMovies";
+import "./CardMovieStyle.css";
 
 interface CardMovieProps {
   movie: Movie;
-  fethMovies: () => Promise<void>;
 }
 
-const CardMovie: React.FC<CardMovieProps> = ({ movie, fethMovies }) => {
+const CardMovie: React.FC<CardMovieProps> = ({ movie }) => {
   const { getUserID } = useAuth();
+  const { fetchMovies } = useMovies();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const addFavorites = async (id_movie: number) => {
@@ -25,7 +26,7 @@ const CardMovie: React.FC<CardMovieProps> = ({ movie, fethMovies }) => {
       id_movie,
     };
     await addOrRemoveToFavorites(data);
-    await fethMovies();
+    await fetchMovies();
     setIsLoading(false);
   };
 
@@ -44,8 +45,9 @@ const CardMovie: React.FC<CardMovieProps> = ({ movie, fethMovies }) => {
       <div key={movie.id} className="card-movie">
         <div className="div-favoritos">
           <p className="views-count">
+            <Eye size={25} strokeWidth={1.1} color={"aliceblue"} />
             {movie.views.length}{" "}
-            {`${movie.views.length === 1 ? "Visualização" : "Visualizações"}`}
+            {`${movie.views.length === 1 ? "Visualização" : "Visualizações"} `}
           </p>
           {isLoading ? (
             <Loading color={"red"} size={20} padding={5} />
@@ -69,7 +71,7 @@ const CardMovie: React.FC<CardMovieProps> = ({ movie, fethMovies }) => {
         <div className="div-icon-and-link-img">
           <Link
             onClick={() => addView(movie.id)}
-            to={"/assistir"}
+            to={`/watch/${movie.id}/${movie.category_id}`}
             className="image-container"
           >
             <img src={movie.cover} alt="Capa" className="img-movie" />
@@ -79,7 +81,7 @@ const CardMovie: React.FC<CardMovieProps> = ({ movie, fethMovies }) => {
         <div className="info-movie">
           <p>{movie.title}</p>
         </div>
-        <Reactions movie={movie} fethMovies={fethMovies} />
+        <Reactions movie={movie} />
       </div>
     </>
   );

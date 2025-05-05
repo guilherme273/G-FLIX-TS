@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-import { authGuard } from "../Auth/AuthService";
+import { authGuard } from "../Contexts/Auth/AuthService";
 import GeneralLoading from "../Components/Loading/GeneralLoading";
 
 const LoggedIn: React.FC = () => {

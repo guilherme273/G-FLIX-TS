@@ -1,32 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "./HomeStyle.css";
 import Header from "../../Components/Header/Header";
 import GeneralSection from "../../Components/GeneralSection/GeneralSection";
 import Banner from "../../Components/Banner/Banner";
-import { getMovies } from "../../Movie/Movie.service";
-import { Movies } from "../../Movie/MovieInterface";
+
 import CategoryesMovie from "../../Components/CategoryesMovies/CategoryesMovie";
 import Loading from "../../Components/Loading/Loading";
 import Footer from "../../Components/Footer/Footer";
-
-const imagesbanner = [
-  { prevImg: "image1", url: "/assets/banner-home.png" },
-  { prevImg: "image2", url: "/assets/banner-assistir.png" },
-];
+import { imagesbanner } from "../../Utils/BannerImages";
+import { useMovies } from "../../Contexts/Movies/useMovies";
 
 const Home: React.FC = () => {
-  const [categories, setCategories] = useState<Movies[]>([]);
+  const { fetchMovies } = useMovies();
+  const categories = useMovies().movies;
 
-  const fethMovies = async () => {
-    try {
-      const data = await getMovies();
-      setCategories(data.movies);
-    } catch (error) {
-      console.log(error);
-    }
-  };
   useEffect(() => {
-    fethMovies();
+    fetchMovies();
   }, []);
 
   return (
@@ -42,7 +31,6 @@ const Home: React.FC = () => {
               key={category.id}
               category={category.name}
               movies={category.movies}
-              fethMovies={fethMovies}
             />
           ))
         )}

@@ -17,10 +17,14 @@
   z-index: 999;
 }
 
-.div-header {
+.div-header-logo {
   display: flex;
   flex-direction: row;
   gap: 1.2rem;
+  position: relative;
+}
+
+.div-header {
   position: relative;
 }
 .div-header-nav {
@@ -35,7 +39,9 @@
 .logo-g-flix {
   width: 100px;
 }
-
+.logo-g-flix-header {
+  width: 100px;
+}
 .link-header {
   text-decoration: none;
   color: aliceblue;
@@ -80,25 +86,22 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 35px;
-  height: 35px;
-  background-color: red;
+  width: 40px;
+  height: 40px;
+  background-color: rgb(56, 26, 68);
   border-radius: 50%;
   cursor: pointer;
   position: relative;
 }
 
-.span-first-letter-name-user {
+.icon-user-header {
   color: aliceblue;
-  font-weight: 600;
-  font-size: 20px;
-  position: absolute;
 }
 
 .dropdown-menu {
   position: absolute;
-  top: 40px; /* abaixo da bolinha */
-  right: -310%;
+  top: 45px; /* abaixo da bolinha */
+  right: -295%;
   background-color: black;
   border: 1px solid rgba(255, 0, 0, 0.249);
   border-radius: 8px;
@@ -156,7 +159,7 @@
     display: flex;
     position: fixed;
     top: 2%;
-    right: 3%;
+    left: 3%;
     justify-content: center;
     align-items: center;
     background-color: black;
@@ -177,20 +180,23 @@
     left: 0;
     width: 60%;
     height: 100%;
-    justify-content: space-around;
     align-items: center;
     gap: 1rem;
     flex-direction: column;
-    min-height: 70px;
     border-bottom-right-radius: 20px;
     border-top-right-radius: 20px;
     z-index: 999;
     animation: slideInFromLeft 0.5s ease-out forwards;
   }
-  .div-header {
+  .div-header-logo {
     display: flex;
     flex-direction: row;
     gap: 1.2rem;
+    margin-top: 2rem;
+  }
+
+  .div-header {
+    margin-top: 13rem;
   }
   .div-header-nav {
     display: flex;
@@ -198,6 +204,7 @@
     gap: 1.2rem;
     width: 100%;
     justify-content: flex-start;
+    margin-top: 5rem;
   }
   .link-header {
     border-bottom: 1px solid rgba(255, 0, 0, 0.395);
@@ -214,6 +221,13 @@
   .link-header:hover::after {
     display: none;
   }
+
+  .logo-g-flix-header {
+    width: 200px;
+  }
+  .div-user-header-content {
+    bottom: 0;
+  }
 }
 
 @media (min-width: 600px) and (max-width: 1114px) {
@@ -225,7 +239,7 @@
   .dropdown-menu-mobile {
     position: absolute;
     top: -153px; /* abaixo da bolinha */
-    right: -200%;
+    right: -175%;
     background-color: black;
     border: 1px solid rgba(255, 0, 0, 0.249);
     border-radius: 8px;
@@ -241,7 +255,7 @@
     overflow-wrap: break-word;
   }
 }
-@media (min-width: 1px) and (max-width: 328px) {
+@media (min-width: 278px) and (max-width: 340px) {
   .dropdown-menu-mobile {
     position: absolute;
     top: -153px; /* abaixo da bolinha */
@@ -253,6 +267,26 @@
     padding: 8px 0;
     z-index: 100;
     min-width: 150px;
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+}
+@media (min-width: 1px) and (max-width: 277px) {
+  .dropdown-menu-mobile {
+    position: absolute;
+    top: -153px; /* abaixo da bolinha */
+    right: -100%;
+    background-color: black;
+    border: 1px solid rgba(255, 0, 0, 0.249);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 8px 0;
+    z-index: 100;
+    min-width: 120px;
     min-height: 150px;
     display: flex;
     flex-direction: column;

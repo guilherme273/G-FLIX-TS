@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useAuth } from "../../Auth/UseAuth";
+import { useAuth } from "../../Contexts/Auth/UseAuth";
 import {
   AlignJustify,
   Home,
@@ -7,6 +7,7 @@ import {
   LogOut,
   Search,
   Star,
+  User as UserIcon,
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import "./HeaderStyle.css";
@@ -63,9 +64,13 @@ const Header: React.FC = () => {
         ref={menuRef}
         className={showMObileHeader ? "header-mobile" : "header"}
       >
-        <div className="div-header">
+        <div className="div-header-logo">
           <Link to="/" className="link-logo">
-            <img src="/assets/logo-g.png" className="logo-g-flix" alt="" />
+            <img
+              src="/assets/logo-g.png"
+              className="logo-g-flix-header"
+              alt=""
+            />
           </Link>
         </div>
         <div className="div-header-nav">
@@ -74,11 +79,11 @@ const Header: React.FC = () => {
             Home
           </Link>
 
-          <Link className="link-header" to="/pesquisar">
+          <Link className="link-header" to="/search">
             <Search className="icon-link-header" />
             Pesquisar
           </Link>
-          <Link className="link-header" to="/Favoritos">
+          <Link className="link-header" to="/favorites">
             <Star className="icon-link-header" />
             Favoritos
           </Link>
@@ -92,7 +97,7 @@ const Header: React.FC = () => {
             aria-expanded={open}
             aria-controls="dropdown-menu"
           >
-            <span className="span-first-letter-name-user">G</span>
+            <UserIcon className="icon-user-header" />
           </div>
 
           {open && (

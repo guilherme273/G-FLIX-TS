@@ -1,19 +1,21 @@
 import { Angry, Heart, Smile, ThumbsDown, ThumbsUp } from "lucide-react";
-import { Movie } from "../../Movie/MovieInterface";
+
 import { makeReaction } from "../../Reactions/Reactions.service";
 import { useState } from "react";
-import { useAuth } from "../../Auth/UseAuth";
+import { useAuth } from "../../Contexts/Auth/UseAuth";
 import { Reaction } from "../../Reactions/ReactionsInterface";
 import "./Reactions.style.css";
+import { useMovies } from "../../Contexts/Movies/useMovies";
+import { Movie } from "../../Contexts/Movies/MovieInterface";
 
 interface RactionsProps {
   movie: Movie;
-  fethMovies: () => Promise<void>;
 }
 
-const Reactions: React.FC<RactionsProps> = ({ movie, fethMovies }) => {
+const Reactions: React.FC<RactionsProps> = ({ movie }) => {
   const [loadingReaction, setLoadingReaction] = useState<boolean>(false);
   const { getUserID } = useAuth();
+  const { fetchMovies } = useMovies();
 
   const getUserReactionType = (
     reactions: Reaction[],
@@ -33,7 +35,7 @@ const Reactions: React.FC<RactionsProps> = ({ movie, fethMovies }) => {
     };
     await makeReaction(data);
     console.log(data);
-    await fethMovies();
+    await fetchMovies();
     setLoadingReaction(false);
   };
 

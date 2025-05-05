@@ -1,18 +1,14 @@
 import { useRef } from "react";
-import { Movie } from "../../Movie/MovieInterface";
 import ButtonsCarousel from "../ButtonsCarousel/ButtonsCarousel";
 import CardMovie from "../CardMovie/CardMovie";
 import "./SectionCarouselStyle.css";
+import { Movie } from "../../Contexts/Movies/MovieInterface";
 
 interface SectionCarouselProps {
   movies: Movie[];
-  fethMovies: () => Promise<void>;
 }
 
-const SectionCarousel: React.FC<SectionCarouselProps> = ({
-  movies,
-  fethMovies,
-}) => {
+const SectionCarousel: React.FC<SectionCarouselProps> = ({ movies }) => {
   const carousel = useRef<HTMLDivElement | null>(null);
 
   const smoothScroll = (
@@ -58,9 +54,7 @@ const SectionCarousel: React.FC<SectionCarouselProps> = ({
     <>
       <section className="div-carousel" ref={carousel}>
         {movies.map((movie: Movie) => {
-          return (
-            <CardMovie key={movie.id} movie={movie} fethMovies={fethMovies} />
-          );
+          return <CardMovie key={movie.id} movie={movie} />;
         })}
       </section>
       <ButtonsCarousel scrollLeft={scrollLeft} scrollRight={scrollRight} />

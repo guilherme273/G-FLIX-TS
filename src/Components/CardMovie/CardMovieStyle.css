@@ -33,6 +33,7 @@
 .card-movie:hover {
   transform: scale(1.05);
   box-shadow: 0 6px 16px;
+  background-color: rgb(33, 33, 33);
 }
 .div-carousel .img-movie {
   width: 275px;
@@ -74,6 +75,11 @@
 }
 
 .views-count {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
   position: absolute;
   left: 3%;
   color: aliceblue;

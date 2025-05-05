@@ -1,12 +1,13 @@
-import { Favorites } from "../Favorites/FavoritesInterface";
-import { Reaction } from "../Reactions/ReactionsInterface";
-import { Views } from "../ViewsMovies/ViewsMoviesInterface";
+import { Favorites } from "../../Favorites/FavoritesInterface";
+import { Reaction } from "../../Reactions/ReactionsInterface";
+import { Views } from "../../ViewsMovies/ViewsMoviesInterface";
 
 export interface Movie {
   id: number;
   title: string;
   url: string;
   cover: string;
+  category_id: number;
   createdAt: string;
   updatedAt: string;
   reactions: Reaction[];
