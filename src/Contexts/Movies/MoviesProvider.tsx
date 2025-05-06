@@ -2,31 +2,31 @@ import { useState } from "react";
 import { MoviesContext } from "./MoviesContext";
 import { Movie, Movies } from "./MovieInterface";
 import { getMovies } from "./Movie.service";
+import { Reaction } from "../../Reactions/ReactionsInterface";
+import { getReactions } from "../../Reactions/Reactions.service";
+import { Favorites } from "../../Favorites/FavoritesInterface";
+import { getFavorites } from "../../Favorites/Favorites.service";
 import { useAuth } from "../Auth/UseAuth";
 
 export const MoviesProvider = ({ children }: { children: React.ReactNode }) => {
+  const { getUserID } = useAuth();
   const [movies, setMovies] = useState<Movies[]>([]);
   const [moviesNoCategory, setMoviesNoCategory] = useState<Movie[]>([]);
-  const [favoriteMovies, setfavoriteMovies] = useState<Movie[]>([]);
-  const { getUserID } = useAuth();
+  const [favorites, setFavorites] = useState<Favorites[]>([]);
+  const [favoritesUser, setFavoritesUser] = useState<Favorites[]>([]);
+  const [reactions, setReactions] = useState<Reaction[]>([]);
 
   const fetchMovies = async () => {
     try {
       const response = await getMovies();
-      const userId = getUserID();
-      console.log(userId, "i");
 
       const noCategory = response.movies.flatMap(
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (category: any) => category.movies
       );
 
-      const newfavoriteMovies = noCategory.filter((movie: Movie) => {
-        return movie.favorites?.some((fav) => fav.id_user === userId);
-      });
-
       setMoviesNoCategory(noCategory);
-      setfavoriteMovies(newfavoriteMovies);
+
       setMovies(response.movies);
       return true;
     } catch (error) {
@@ -35,8 +35,37 @@ export const MoviesProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  const fetchReactions = async () => {
+    try {
+      const response = await getReactions();
+      setReactions(response.reactions);
+      return true;
+    } catch (error) {
+      console.error("Erro ao buscar reações:", error);
+      return false;
+    }
+  };
+
+  const fetchFavorites = async () => {
+    try {
+      const response = await getFavorites();
+      const newfavoriteMovies = response.favorites.filter(
+        (favorite: Favorites) => {
+          return favorite.id_user === getUserID();
+        }
+      );
+      setFavorites(response.favorites);
+      setFavoritesUser(newfavoriteMovies);
+      return true;
+    } catch (error) {
+      console.error("Erro ao buscar favoritos:", error);
+      return false;
+    }
+  };
+
   const getMovie = (id_movie: number) => {
-    return moviesNoCategory.find((movie) => movie.id === id_movie);
+    const movie = moviesNoCategory.find((movie) => movie.id === id_movie);
+    return movie;
   };
 
   const getMoviesForCategory = (id_category: number | undefined) => {
@@ -47,15 +76,35 @@ export const MoviesProvider = ({ children }: { children: React.ReactNode }) => {
     return movies;
   };
 
+  const getReactionsOfSomeMovie = (id_movie: number) => {
+    const reactionsThisMovie = reactions.filter((reaction) => {
+      return reaction.id_movie === id_movie;
+    });
+    return reactionsThisMovie;
+  };
+
+  const getFavoritesOfSomeMovie = (id_movie: number) => {
+    const favoritesThisMovie = favorites.filter((favorite) => {
+      return favorite.id_movie === id_movie;
+    });
+    return favoritesThisMovie;
+  };
+
   return (
     <MoviesContext.Provider
       value={{
         movies,
-        fetchMovies,
+        reactions,
+        favorites,
+        favoritesUser,
         moviesNoCategory,
-        favoriteMovies,
         getMovie,
         getMoviesForCategory,
+        getReactionsOfSomeMovie,
+        getFavoritesOfSomeMovie,
+        fetchReactions,
+        fetchFavorites,
+        fetchMovies,
       }}
     >
       {children}

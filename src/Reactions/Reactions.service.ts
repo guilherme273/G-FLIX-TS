@@ -7,3 +7,8 @@ export const makeReaction = async (data: ReactionsDto) => {
   toast_fy(response.data);
   return response.data;
 };
+
+export const getReactions = async () => {
+  const response = await api.get("/reactions");
+  return response.data;
+};

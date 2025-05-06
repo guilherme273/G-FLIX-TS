@@ -29,7 +29,7 @@
   align-items: center;
 }
 
-.video-container iframe {
+.video-container .player-youtube {
   position: absolute;
   top: 0;
   left: 0;
@@ -79,6 +79,11 @@
 .reactions-div-spred-favorites {
   position: absolute;
   right: 0;
+}
+
+.title-carousel-watch {
+  color: aliceblue;
+  font-size: xx-large;
 }
 
 @media (min-width: 1px) and (max-width: 600px) {

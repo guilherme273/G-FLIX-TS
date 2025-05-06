@@ -8,15 +8,14 @@ import "./FavoritesStyle.css";
 import Loading from "../../Components/Loading/Loading";
 import CardMovie from "../../Components/CardMovie/CardMovie";
 import { useMovies } from "../../Contexts/Movies/useMovies";
-import { h1 } from "framer-motion/client";
 
 const Favorites: React.FC = () => {
-  const { fetchMovies, favoriteMovies } = useMovies();
+  const { fetchFavorites, favoritesUser, getMovie } = useMovies();
   const [isLoading, setIsloading] = useState<boolean>(false);
 
   const filterMovies = async () => {
     setIsloading(true);
-    await fetchMovies();
+    await fetchFavorites();
     setIsloading(false);
   };
 
@@ -33,15 +32,18 @@ const Favorites: React.FC = () => {
         <section className="container-search">
           {isLoading ? (
             <Loading padding={300} color="red" size={100} />
-          ) : favoriteMovies.length === 0 ? (
+          ) : favoritesUser.length === 0 ? (
             <h1 className="h1-no-favofites">
               Nenhum filme adicionado como favoritos no momento!
             </h1>
           ) : (
             <>
-              {favoriteMovies.map((movie) => (
-                <CardMovie key={movie.id} movie={movie} />
-              ))}
+              {favoritesUser.map((favorite) => {
+                const movie = getMovie(favorite.id_movie);
+                return movie ? (
+                  <CardMovie key={movie.id} movie={movie} />
+                ) : null;
+              })}
             </>
           )}
         </section>

@@ -8,6 +8,7 @@ export interface Movie {
   url: string;
   cover: string;
   category_id: number;
+  youtube_id: string;
   createdAt: string;
   updatedAt: string;
   reactions: Reaction[];
@@ -24,4 +25,8 @@ export interface Movies {
   createdAt: string;
   updatedAt: string;
   movies: Movie[];
+}
+export interface addMovieDto {
+  url: string;
+  category_id: string;
 }

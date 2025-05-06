@@ -1,5 +1,4 @@
 import { Angry, Heart, Smile, ThumbsDown, ThumbsUp } from "lucide-react";
-
 import { makeReaction } from "../../Reactions/Reactions.service";
 import { useState } from "react";
 import { useAuth } from "../../Contexts/Auth/UseAuth";
@@ -15,13 +14,13 @@ interface RactionsProps {
 const Reactions: React.FC<RactionsProps> = ({ movie }) => {
   const [loadingReaction, setLoadingReaction] = useState<boolean>(false);
   const { getUserID } = useAuth();
-  const { fetchMovies } = useMovies();
+  const { getReactionsOfSomeMovie, fetchReactions } = useMovies();
 
   const getUserReactionType = (
-    reactions: Reaction[],
+    reactions: Reaction[] | undefined,
     userId: number | null | undefined
   ) => {
-    const userReaction = reactions.find(
+    const userReaction = reactions?.find(
       (reaction) => reaction.id_user === userId
     );
     return userReaction ? userReaction.id_reactions_type : null;
@@ -34,19 +33,32 @@ const Reactions: React.FC<RactionsProps> = ({ movie }) => {
       id_movie,
     };
     await makeReaction(data);
-    console.log(data);
-    await fetchMovies();
+    await fetchReactions();
     setLoadingReaction(false);
   };
 
-  const userReactionType = getUserReactionType(movie.reactions, getUserID());
+  const userReactionType = getUserReactionType(
+    getReactionsOfSomeMovie(movie.id),
+    getUserID()
+  );
+
+  function countReactionsByType(
+    reactions: Reaction[] | undefined,
+    id_reactions_type: number
+  ): number {
+    return (reactions ?? []).filter(
+      (reaction) => reaction.id_reactions_type === id_reactions_type
+    ).length;
+  }
   return (
     <>
       <div className="container-reactions">
         <div className="reaction-icons">
           {/* Like */}
           <div className="div-count-reaction">
-            <p className="count-reaction">{movie.reactionCounts[1] || 0}</p>
+            <p className="count-reaction">
+              {countReactionsByType(getReactionsOfSomeMovie(movie.id), 1)}
+            </p>
             {userReactionType === 1 ? (
               <img
                 title="Remover Reação"
@@ -71,7 +83,10 @@ const Reactions: React.FC<RactionsProps> = ({ movie }) => {
 
           {/* Dislike */}
           <div className="div-count-reaction">
-            <p className="count-reaction">{movie.reactionCounts[2] || 0}</p>
+            <p className="count-reaction">
+              {" "}
+              {countReactionsByType(getReactionsOfSomeMovie(movie.id), 2)}
+            </p>
             {userReactionType === 2 ? (
               <img
                 title="Remover Reação"
@@ -96,7 +111,10 @@ const Reactions: React.FC<RactionsProps> = ({ movie }) => {
 
           {/* Love */}
           <div className="div-count-reaction">
-            <p className="count-reaction">{movie.reactionCounts[3] || 0}</p>
+            <p className="count-reaction">
+              {" "}
+              {countReactionsByType(getReactionsOfSomeMovie(movie.id), 3)}
+            </p>
             {userReactionType === 3 ? (
               <img
                 title="Remover Reação"
@@ -121,7 +139,10 @@ const Reactions: React.FC<RactionsProps> = ({ movie }) => {
 
           {/* Smile */}
           <div className="div-count-reaction">
-            <p className="count-reaction">{movie.reactionCounts[4] || 0}</p>
+            <p className="count-reaction">
+              {" "}
+              {countReactionsByType(getReactionsOfSomeMovie(movie.id), 4)}
+            </p>
             {userReactionType === 4 ? (
               <img
                 title="Remover Reação"
@@ -146,7 +167,10 @@ const Reactions: React.FC<RactionsProps> = ({ movie }) => {
 
           {/* Angry */}
           <div className="div-count-reaction">
-            <p className="count-reaction">{movie.reactionCounts[5] || 0}</p>
+            <p className="count-reaction">
+              {" "}
+              {countReactionsByType(getReactionsOfSomeMovie(movie.id), 5)}
+            </p>
             {userReactionType === 5 ? (
               <img
                 title="Remover Reação"

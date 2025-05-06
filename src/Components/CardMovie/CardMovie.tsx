@@ -5,7 +5,6 @@ import { useAuth } from "../../Contexts/Auth/UseAuth";
 import { addOrRemoveToFavorites } from "../../Favorites/Favorites.service";
 import { useState } from "react";
 import Loading from "../Loading/Loading";
-import { addToViews } from "../../ViewsMovies/ViewsMovies.service";
 import { Movie } from "../../Contexts/Movies/MovieInterface";
 import { useMovies } from "../../Contexts/Movies/useMovies";
 import "./CardMovieStyle.css";
@@ -16,28 +15,21 @@ interface CardMovieProps {
 
 const CardMovie: React.FC<CardMovieProps> = ({ movie }) => {
   const { getUserID } = useAuth();
-  const { fetchMovies } = useMovies();
+  const { fetchFavorites, getFavoritesOfSomeMovie } = useMovies();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const addFavorites = async (id_movie: number) => {
     setIsLoading(true);
-
     const data = {
       id_movie,
     };
     await addOrRemoveToFavorites(data);
-    await fetchMovies();
+    await fetchFavorites();
     setIsLoading(false);
   };
 
-  const addView = async (id_movie: number) => {
-    const data = {
-      id_movie,
-    };
-    await addToViews(data);
-  };
-
-  const isFavorited = movie.favorites.some(
+  const favorites = getFavoritesOfSomeMovie(movie.id);
+  const isFavorited = favorites?.some(
     (favorite) => favorite.id_user === getUserID()
   );
   return (
@@ -70,7 +62,6 @@ const CardMovie: React.FC<CardMovieProps> = ({ movie }) => {
         </div>
         <div className="div-icon-and-link-img">
           <Link
-            onClick={() => addView(movie.id)}
             to={`/watch/${movie.id}/${movie.category_id}`}
             className="image-container"
           >

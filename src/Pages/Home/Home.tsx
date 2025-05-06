@@ -11,11 +11,13 @@ import { imagesbanner } from "../../Utils/BannerImages";
 import { useMovies } from "../../Contexts/Movies/useMovies";
 
 const Home: React.FC = () => {
-  const { fetchMovies } = useMovies();
+  const { fetchMovies, fetchReactions, fetchFavorites } = useMovies();
   const categories = useMovies().movies;
 
   useEffect(() => {
     fetchMovies();
+    fetchReactions();
+    fetchFavorites();
   }, []);
 
   return (

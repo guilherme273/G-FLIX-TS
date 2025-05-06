@@ -5,6 +5,7 @@ import "./OverviewStyle.css";
 import StatCard from "../../../Components/Admin/Common/StartCard/StartCard";
 import { BarChart2, ShoppingBag, Users, Zap } from "lucide-react";
 import "../../../tailwindStyle.css";
+import FormAddMovie from "../../../Components/Admin/Movies/FormAddMovie";
 const Overview: React.FC = () => {
   return (
     <>
@@ -48,6 +49,10 @@ const Overview: React.FC = () => {
                 color="#10B981"
               />
             </motion.div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <FormAddMovie />
+            </div>
           </div>
         </div>
       </div>

@@ -7,3 +7,8 @@ export const addOrRemoveToFavorites = async (data: FavoritesDTO) => {
   toast_fy(response.data);
   return response.data;
 };
+
+export const getFavorites = async () => {
+  const response = await api.get("/favorites");
+  return response.data;
+};

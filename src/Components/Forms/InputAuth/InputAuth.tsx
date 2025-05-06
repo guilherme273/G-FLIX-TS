@@ -7,7 +7,7 @@ interface InputAuthProps {
   icon: LucideIcon;
   type: string;
   placeholder: string;
-  inputName: "name" | "email" | "password" | "confirmPassword";
+  inputName: "name" | "email" | "password" | "confirmPassword" | "url";
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   register: UseFormRegister<any>;
   registerOptions?: RegisterOptions;
