@@ -8,7 +8,7 @@ import {
   TrendingUp,
   Users,
 } from "lucide-react";
-import { useState } from "react";
+
 import { AnimatePresence, motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import "./SideBarStyle.css";
@@ -18,23 +18,29 @@ const SIDEBAR_ITEMS = [
     name: "Overview",
     icon: BarChart2,
     color: "#6366f1",
-    href: "/",
+    href: "/dashboard",
   },
+  { name: "Users", icon: Users, color: "#EC4899", href: "/dashboard/users" },
   { name: "Products", icon: ShoppingBag, color: "#8B5CF6", href: "/products" },
-  { name: "Users", icon: Users, color: "#EC4899", href: "/users" },
   { name: "Sales", icon: DollarSign, color: "#10B981", href: "/sales" },
   { name: "Orders", icon: ShoppingCart, color: "#F59E0B", href: "/orders" },
   { name: "Analytics", icon: TrendingUp, color: "#3B82F6", href: "/analytics" },
   { name: "Settings", icon: Settings, color: "#6EE7B7", href: "/settings" },
 ];
 
-const Sidebar: React.FC = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+interface SidebarProps {
+  isSidebarOpen: boolean;
+  setIsSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
+const Sidebar: React.FC<SidebarProps> = ({
+  isSidebarOpen,
+  setIsSidebarOpen,
+}) => {
   return (
     <motion.div
-      className={`relative z-10 transition-all duration-300 ease-in-out flex-shrink-0 ${
-        isSidebarOpen ? "w-64" : "w-20"
+      className={`fixed h-[100vh] z-10 transition-all duration-300 ease-in-out flex-shrink-0 ${
+        isSidebarOpen ? "w-64" : " w-20"
       }`}
       animate={{ width: isSidebarOpen ? 256 : 80 }}
     >
@@ -51,7 +57,7 @@ const Sidebar: React.FC = () => {
         <nav className="flex-grow mt-8">
           {SIDEBAR_ITEMS.map((item) => (
             <Link key={item.href} to={item.href}>
-              <motion.div className="flex items-center p-4 mb-2 text-sm font-medium rounded-lg  nav-sidebar">
+              <motion.div className="flex items-center p-4 mb-2 text-sm font-medium rounded-lg nav-sidebar">
                 <item.icon
                   size={20}
                   style={{ color: item.color, minWidth: "20px" }}

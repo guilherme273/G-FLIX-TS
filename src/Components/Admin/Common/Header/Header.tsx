@@ -6,10 +6,8 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ title }) => {
   return (
-    <header className="section-header-admin">
-      <div className="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
-        <h1 className="text-2xl font-semibold text-gray-100">{title}</h1>
-      </div>
+    <header className="w-[100%] mt-2 mb-8">
+      <h1 className="text-2xl font-semibold text-gray-100">{title}</h1>
     </header>
   );
 };

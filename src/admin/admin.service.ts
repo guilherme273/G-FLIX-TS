@@ -1,4 +1,5 @@
 import api from "../Api/Axios";
+import { OverViewInterface } from "../Pages/Admin/Overview/Overview";
 
 export const adminGuard = async (): Promise<boolean> => {
   try {
@@ -8,4 +9,9 @@ export const adminGuard = async (): Promise<boolean> => {
   } catch (error) {
     return false;
   }
+};
+
+export const getOverView = async (): Promise<OverViewInterface> => {
+  const response = await api.get<OverViewInterface>("/admin/overview");
+  return response.data;
 };

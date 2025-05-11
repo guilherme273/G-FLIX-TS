@@ -1,10 +1,11 @@
 import { motion } from "framer-motion";
 import { LucideIcon } from "lucide-react";
 import "./StartCardStyle.css";
+import Loading from "../../../Loading/Loading";
 interface StartCardProps {
   name: string;
   icon: LucideIcon;
-  value: number;
+  value: number | undefined;
   color: string;
 }
 
@@ -24,7 +25,9 @@ const StatCard: React.FC<StartCardProps> = ({
           <Icon size={20} className="mr-2" style={{ color }} />
           {name}
         </span>
-        <p className="mt-1 text-3xl font-semibold text-gray-100">{value}</p>
+        <p className="mt-1 text-3xl font-semibold text-gray-100">
+          {value ? value : <Loading padding={0} size={15} color="red" />}
+        </p>
       </div>
     </motion.div>
   );

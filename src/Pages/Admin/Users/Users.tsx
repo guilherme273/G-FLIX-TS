@@ -4,11 +4,18 @@ import StatCard from "../../../Components/Admin/Common/StartCard/StartCard";
 // import FormAddMovie from "../../../Components/Admin/Movies/FormAddMovie";
 import { BarChart2, ShoppingBag, Users, Zap } from "lucide-react";
 import { useEffect, useState } from "react";
-import "./OverviewStyle.css";
 import "../../../tailwindStyle.css";
 import { getOverView } from "../../../Admin/Admin.service";
 import Chart, { ChartData } from "../../../Components/Admin/Chart/Chart";
 import Header from "../../../Components/Admin/Common/Header/Header";
+import TableUsers from "../../../Components/Admin/Common/Table/TableUsers";
+import UsersTable from "../../../Components/Admin/Common/Table/UsersTable";
+import { u } from "framer-motion/client";
+import { User } from "../../../User/UserInterface";
+import { getUsers } from "../../../User/User.Service";
+import Loading from "../../../Components/Loading/Loading";
+import Modal from "../../../Components/Modal/Modal";
+import FormRegister from "../../../Components/Forms/FormRegister/FormRegister";
 
 export interface OverViewInterface {
   userscount: number;
@@ -19,16 +26,22 @@ export interface OverViewInterface {
   viewsPerCategory: ChartData[];
 }
 
-const Overview: React.FC = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
-  const [overviewData, setOverviewData] = useState<OverViewInterface>();
+export interface UserDataPage {
+  users: User[];
+  count: number;
+}
 
-  const fetchOverview = async () => {
-    const overview = await getOverView();
-    setOverviewData(overview);
+const UsersPage: React.FC = () => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
+  const [usersData, setUsersData] = useState<UserDataPage>();
+  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
+
+  const fetchUsers = async () => {
+    const overview = await getUsers();
+    setUsersData(overview);
   };
   useEffect(() => {
-    fetchOverview();
+    fetchUsers();
   }, []);
 
   // const chartData = [
@@ -59,16 +72,16 @@ const Overview: React.FC = () => {
             <StatCard
               name="Total de usuários"
               icon={Users}
-              value={overviewData?.userscount}
+              value={1}
               color="#6366F1"
             />
             <StatCard
-              name="Total de filmes"
+              name="Novos Usuários(Última semana)"
               icon={Zap}
-              value={overviewData?.moviesCount}
+              value={1}
               color="#8B5CF6"
             />
-            <StatCard
+            {/* <StatCard
               name="Total adicionado aos favoritos"
               icon={ShoppingBag}
               value={overviewData?.favoritesCount}
@@ -79,29 +92,44 @@ const Overview: React.FC = () => {
               icon={BarChart2}
               value={overviewData?.reactionsCount}
               color="#10B981"
-            />
+            /> */}
           </motion.div>
 
           <motion.div
-            className="grid grid-cols-1 gap-5 mb-8 sm:grid-cols-2 lg:grid-cols-2"
+            className="grid grid-cols-1 gap-5 mb-8 sm:grid-cols-1 lg:grid-cols-1"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
           >
-            <Chart
+            {/* <Chart
               title="Filmes Por Categoria"
               chartData={overviewData?.moviesPerCategory}
             />
             <Chart
               title="Visualizações Por Categoria"
               chartData={overviewData?.viewsPerCategory}
-            />
+            /> */}
             {/* <FormAddMovie /> */}
+            {usersData ? (
+              <UsersTable
+                setIsOpenModal={setIsOpenModal}
+                users={usersData?.users}
+              />
+            ) : (
+              <Loading color="red" size={50} padding={10} />
+            )}
           </motion.div>
         </main>
       </div>
+      {isOpenModal && (
+        <Modal
+          title={"Adicionar Usuário!"}
+          children={<FormRegister />}
+          setIsOpenModal={setIsOpenModal}
+        />
+      )}
     </>
   );
 };
 
-export default Overview;
+export default UsersPage;

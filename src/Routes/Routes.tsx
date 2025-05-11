@@ -1,4 +1,5 @@
 import Overview from "../Pages/Admin/Overview/Overview";
+import UsersPage from "../Pages/Admin/Users/Users";
 import Favorites from "../Pages/Favorites/Favorites";
 import Home from "../Pages/Home/Home";
 import Login from "../Pages/Login/Login";
@@ -65,6 +66,16 @@ export const Routes = [
       {
         path: "",
         element: <Overview />,
+      },
+    ],
+  },
+  {
+    path: "/dashboard/users",
+    element: <IsAdmin />,
+    children: [
+      {
+        path: "",
+        element: <UsersPage />,
       },
     ],
   },
