@@ -1,9 +1,9 @@
 import {
   BarChart2,
+  Clapperboard,
   DollarSign,
   Menu,
   Settings,
-  ShoppingBag,
   ShoppingCart,
   TrendingUp,
   Users,
@@ -15,13 +15,18 @@ import "./SideBarStyle.css";
 
 const SIDEBAR_ITEMS = [
   {
-    name: "Overview",
+    name: "Visão Geral",
     icon: BarChart2,
     color: "#6366f1",
     href: "/dashboard",
   },
-  { name: "Users", icon: Users, color: "#EC4899", href: "/dashboard/users" },
-  { name: "Products", icon: ShoppingBag, color: "#8B5CF6", href: "/products" },
+  { name: "Usuários", icon: Users, color: "#EC4899", href: "/dashboard/users" },
+  {
+    name: "Filmes",
+    icon: Clapperboard,
+    color: "#8B5CF6",
+    href: "/dashboard/movies",
+  },
   { name: "Sales", icon: DollarSign, color: "#10B981", href: "/sales" },
   { name: "Orders", icon: ShoppingCart, color: "#F59E0B", href: "/orders" },
   { name: "Analytics", icon: TrendingUp, color: "#3B82F6", href: "/analytics" },

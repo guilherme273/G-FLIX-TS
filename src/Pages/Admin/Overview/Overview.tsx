@@ -2,7 +2,15 @@ import Sidebar from "../../../Components/Admin/Common/SideBar/SideBar";
 import { motion } from "framer-motion";
 import StatCard from "../../../Components/Admin/Common/StartCard/StartCard";
 // import FormAddMovie from "../../../Components/Admin/Movies/FormAddMovie";
-import { BarChart2, ShoppingBag, Users, Zap } from "lucide-react";
+import {
+  BarChart2,
+  Clapperboard,
+  Heart,
+  ShoppingBag,
+  Star,
+  Users,
+  Zap,
+} from "lucide-react";
 import { useEffect, useState } from "react";
 import "./OverviewStyle.css";
 import "../../../tailwindStyle.css";
@@ -64,19 +72,19 @@ const Overview: React.FC = () => {
             />
             <StatCard
               name="Total de filmes"
-              icon={Zap}
+              icon={Clapperboard}
               value={overviewData?.moviesCount}
               color="#8B5CF6"
             />
             <StatCard
               name="Total adicionado aos favoritos"
-              icon={ShoppingBag}
+              icon={Star}
               value={overviewData?.favoritesCount}
-              color="#EC4899"
+              color="#F59E0B"
             />
             <StatCard
               name="Total de Reações"
-              icon={BarChart2}
+              icon={Heart}
               value={overviewData?.reactionsCount}
               color="#10B981"
             />

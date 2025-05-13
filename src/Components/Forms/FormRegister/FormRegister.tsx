@@ -6,7 +6,11 @@ import SubmitButton from "../SubmitButton/SubmitButton";
 import { registerUser } from "../../../User/User.Service";
 import { RegisterData } from "../../../User/Register.dto";
 
-const FormRegister: React.FC = () => {
+interface FormRegisterProps {
+  fetch?: () => Promise<void>;
+}
+
+const FormRegister: React.FC<FormRegisterProps> = ({ fetch }) => {
   const {
     register,
     handleSubmit,
@@ -18,8 +22,10 @@ const FormRegister: React.FC = () => {
   const makeRequest = async (data: RegisterData) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { confirmPassword, ...requestData } = data;
-    const response = await registerUser(requestData);
-    console.log(response);
+    await registerUser(requestData);
+    if (fetch) {
+      await fetch();
+    }
   };
 
   return (

@@ -1,3 +1,4 @@
+import MoviesPage from "../Pages/Admin/Movies/Movies";
 import Overview from "../Pages/Admin/Overview/Overview";
 import UsersPage from "../Pages/Admin/Users/Users";
 import Favorites from "../Pages/Favorites/Favorites";
@@ -76,6 +77,16 @@ export const Routes = [
       {
         path: "",
         element: <UsersPage />,
+      },
+    ],
+  },
+  {
+    path: "/dashboard/movies",
+    element: <IsAdmin />,
+    children: [
+      {
+        path: "",
+        element: <MoviesPage />,
       },
     ],
   },

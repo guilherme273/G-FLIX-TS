@@ -11,3 +11,13 @@ export const postMovie = async (data: addMovieDto) => {
   toast_fy(response.data);
   return response.data;
 };
+
+export const getMoviesAdmin = async () => {
+  const response = await api.get("admin/movies");
+  return response.data;
+};
+export const delMovie = async (param: number) => {
+  const response = await api.delete(`admin/movie/${param}`);
+  toast_fy(response.data);
+  return response.data;
+};
