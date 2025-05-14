@@ -1,12 +1,13 @@
 import { useForm } from "react-hook-form";
-import { UserChange } from "../../Table/UsersTable";
-import Loading from "../../../Loading/Loading";
-import { ChangePermissionDTO } from "../../../../User/ChangePermission.dto";
-import { changePermissionUser } from "../../../../User/User.Service";
-import { Layers, Shield } from "lucide-react";
+
+import { Shield } from "lucide-react";
 import "./FormChangePermissionStyle.css";
 import "../../../../tailwindStyle.css";
 import { useEffect } from "react";
+import { UserChange } from "../../Table/UsersTable";
+import { ChangePermissionDTO } from "../../../../Modules/User/ChangePermission.dto";
+import { changePermissionUser } from "../../../../Modules/User/User.Service";
+import Loading from "../../../Loading/Loading";
 interface FormChangePermission {
   user: UserChange | null;
   fetchUsers: () => Promise<void>;
@@ -23,7 +24,7 @@ const FormChangePermission: React.FC<FormChangePermission> = ({
     register,
     handleSubmit,
     setValue,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
   } = useForm<ChangePermissionDTO>();
 
   const submit = async (data: ChangePermissionDTO) => {

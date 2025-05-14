@@ -18,7 +18,15 @@ interface ChartProps {
   chartData: ChartData[] | undefined;
   title: string;
 }
-const COLORS = ["#6366F1", "#8B5CF6", "#EC4899", "#10B981", "#F59E0B"];
+const COLORS = [
+  "#8B5CF6",
+  "#EC4899",
+  "#6DB1A4",
+  "#10B981",
+  "#F59E0B",
+  "#6366F1",
+  "#B1B1B1",
+];
 const Chart: React.FC<ChartProps> = ({ chartData, title }) => {
   return (
     <>

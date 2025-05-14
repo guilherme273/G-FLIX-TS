@@ -1,5 +1,5 @@
-import api from "../Api/Axios";
-import { OverViewInterface } from "../Pages/Admin/Overview/Overview";
+import api from "../../Api/Axios";
+import { OverViewInterface } from "../../Pages/Admin/Overview/Overview";
 
 export const adminGuard = async (): Promise<boolean> => {
   try {

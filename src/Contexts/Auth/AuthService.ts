@@ -1,7 +1,7 @@
 import api from "../../Api/Axios";
 import { toast_fy } from "../../Utils/Toast/Toast";
-import { LoginDTO } from "../../User/Login.dto";
-import { User } from "../../User/UserInterface";
+import { LoginDTO } from "../../Modules/User/Login.dto";
+import { User } from "../../Modules/User/UserInterface";
 
 interface AuthResponse {
   access_token: string;

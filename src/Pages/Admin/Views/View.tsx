@@ -1,31 +1,30 @@
 import Sidebar from "../../../Components/Admin/Common/SideBar/SideBar";
 import { motion } from "framer-motion";
-
 import { useEffect, useState } from "react";
 import "../../../tailwindStyle.css";
-
 import Header from "../../../Components/Admin/Common/Header/Header";
-import MoviesTable from "../../../Components/Admin/Table/MoviesTable";
-import { getMoviesAdmin } from "../../../Contexts/Movies/Movie.service";
-import { MovieTable } from "../../../Contexts/Movies/MovieInterface";
 import Chart, { ChartData } from "../../../Components/Admin/Chart/Chart";
-import Ranking from "../../../Components/Admin/Ranking/Ranking";
+import { getViews } from "../../../Modules/Views/Views.service";
+import LineChartComponent, {
+  DataLineChart,
+} from "../../../Components/Admin/LineChart/LineChart";
 
-interface MoviesData {
-  movies: MovieTable[];
-  moviesPerCategory: ChartData[];
-  top10MostViewed: MovieTable[];
+interface ViewsData {
+  viewsPerCategory: ChartData[];
+  secondsWatchedPerCategory: ChartData[];
+  minutesForDay: DataLineChart[];
 }
 
-const MoviesPage: React.FC = () => {
-  const [moviesData, setMoviesData] = useState<MoviesData>();
+const ViewsPage: React.FC = () => {
+  const [viewsData, setViewsData] = useState<ViewsData>();
 
-  const fetchMovies = async () => {
-    const data = await getMoviesAdmin();
-    setMoviesData(data);
+  const fetchViews = async () => {
+    const data = await getViews();
+    console.log(data);
+    setViewsData(data);
   };
   useEffect(() => {
-    fetchMovies();
+    fetchViews();
   }, []);
 
   return (
@@ -35,18 +34,22 @@ const MoviesPage: React.FC = () => {
         <main
           className={`transition-all duration-300 ease-in-out ml-20 p-4 min-h-[100vh] w-[100%]`}
         >
-          <Header title={"Movies"} />
+          <Header title={"Categorias"} />
+
           <motion.div
-            className="grid grid-cols-1 gap-5 mb-8 sm:grid-cols-2 lg:grid-cols-2"
+            className="grid grid-cols-1 gap-5 mb-8 sm:grid-cols-1 lg:grid-cols-2"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
           >
             <Chart
-              title="Filmes Por Categoria"
-              chartData={moviesData?.moviesPerCategory}
+              chartData={viewsData?.viewsPerCategory}
+              title="Visualizações por Categoria"
             />
-            <Ranking top10MostViewed={moviesData?.top10MostViewed} />
+            <Chart
+              chartData={viewsData?.secondsWatchedPerCategory}
+              title="Tempo Assistido por categoria"
+            />
           </motion.div>
           <motion.div
             className="grid grid-cols-1 gap-5 mb-8 sm:grid-cols-1 lg:grid-cols-1"
@@ -54,9 +57,9 @@ const MoviesPage: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
           >
-            <MoviesTable
-              movies={moviesData?.movies}
-              fetchMovies={fetchMovies}
+            <LineChartComponent
+              data={viewsData?.minutesForDay}
+              title={"Minutos Assistidos Por Dia"}
             />
           </motion.div>
         </main>
@@ -65,4 +68,4 @@ const MoviesPage: React.FC = () => {
   );
 };
 
-export default MoviesPage;
+export default ViewsPage;

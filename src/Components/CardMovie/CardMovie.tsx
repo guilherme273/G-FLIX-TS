@@ -1,12 +1,12 @@
 import { CirclePlay, Eye, Star } from "lucide-react";
 import { Link } from "react-router-dom";
-import Reactions from "../Reactions/Reactions";
-import { useAuth } from "../../Contexts/Auth/UseAuth";
-import { addOrRemoveToFavorites } from "../../Favorites/Favorites.service";
 import { useState } from "react";
-import Loading from "../Loading/Loading";
 import { Movie } from "../../Contexts/Movies/MovieInterface";
+import { useAuth } from "../../Contexts/Auth/UseAuth";
 import { useMovies } from "../../Contexts/Movies/useMovies";
+import { addOrRemoveToFavorites } from "../../Modules/Favorites/Favorites.service";
+import Loading from "../Loading/Loading";
+import Reactions from "../Reactions/Reactions";
 import "./CardMovieStyle.css";
 
 interface CardMovieProps {

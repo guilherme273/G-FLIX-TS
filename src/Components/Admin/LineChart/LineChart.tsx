@@ -8,12 +8,16 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { motion } from "framer-motion";
-import { UserGrowthData } from "../../../Pages/Admin/Users/Users";
+
 import Loading from "../../Loading/Loading";
 
+export interface DataLineChart {
+  name: string;
+  value: number;
+}
 interface LineChartComponentProps {
   title: string;
-  data: UserGrowthData[] | undefined;
+  data: DataLineChart[] | undefined;
 }
 
 const LineChartComponent: React.FC<LineChartComponentProps> = ({
@@ -33,7 +37,7 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={data}>
               <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-              <XAxis dataKey="month" stroke="#9CA3AF" />
+              <XAxis dataKey="name" stroke="#9CA3AF" />
               <YAxis stroke="#9CA3AF" />
               <Tooltip
                 contentStyle={{
@@ -44,7 +48,7 @@ const LineChartComponent: React.FC<LineChartComponentProps> = ({
               />
               <Line
                 type="monotone"
-                dataKey="users"
+                dataKey="value"
                 stroke="#8B5CF6"
                 strokeWidth={2}
                 dot={{ fill: "#8B5CF6", strokeWidth: 2, r: 4 }}

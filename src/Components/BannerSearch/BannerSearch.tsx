@@ -33,19 +33,16 @@ const BannerSearch: React.FC<BannerComponentProps> = ({
   };
 
   useEffect(() => {
-    // executa só 1x a filtragem inicial do termo passado pela URL
     if (text && !hasFirstFilterRun.current) {
       filtrarBusca(text);
       hasFirstFilterRun.current = true;
     }
   }, [text, movies]);
 
-  // toda vez que `movies` for atualizado, refiltra baseado no que o usuário digitou (inputValue)
   useEffect(() => {
     filtrarBusca(inputValue);
   }, [movies]);
 
-  // banner
   useEffect(() => {
     const intervalId = setInterval(() => {
       setCurrentIndex((prevIndex) =>

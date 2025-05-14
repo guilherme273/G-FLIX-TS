@@ -1,7 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
-
-import { adminGuard } from "../Admin/Admin.service";
+import { adminGuard } from "../Modules/Admin/Admin.service";
 import GeneralLoading from "../Components/Loading/GeneralLoading";
 
 const IsAdmin: React.FC = () => {

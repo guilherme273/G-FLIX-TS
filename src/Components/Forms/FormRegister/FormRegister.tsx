@@ -3,8 +3,8 @@ import { useForm } from "react-hook-form";
 import { AtSign, Lock, LockKeyhole, User } from "lucide-react";
 import InputAuth from "../InputAuth/InputAuth";
 import SubmitButton from "../SubmitButton/SubmitButton";
-import { registerUser } from "../../../User/User.Service";
-import { RegisterData } from "../../../User/Register.dto";
+import { registerUser } from "../../../Modules/User/User.Service";
+import { RegisterData } from "../../../Modules/User/Register.dto";
 
 interface FormRegisterProps {
   fetch?: () => Promise<void>;

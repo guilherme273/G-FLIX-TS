@@ -4,6 +4,7 @@ import {
   AlignJustify,
   Home,
   KeyRound,
+  LayoutDashboard,
   LogOut,
   Search,
   Star,
@@ -11,8 +12,8 @@ import {
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import "./HeaderStyle.css";
-import { User } from "../../User/UserInterface";
-import { getUser } from "../../User/User.Service";
+import { User } from "../../Modules/User/UserInterface";
+import { getUser } from "../../Modules/User/User.Service";
 
 const Header: React.FC = () => {
   const { logout } = useAuth();
@@ -29,8 +30,7 @@ const Header: React.FC = () => {
 
   const fethGetUser = async () => {
     const data = await getUser();
-    console.log(data);
-    setUser(data);
+    setUser(data.user);
   };
   useEffect(() => {
     fethGetUser();
@@ -87,6 +87,14 @@ const Header: React.FC = () => {
             <Star className="icon-link-header" />
             Favoritos
           </Link>
+          {user?.type === 1 ? (
+            <Link className="link-header" to="/dashboard">
+              <LayoutDashboard className="icon-link-header" />
+              Dashboard
+            </Link>
+          ) : (
+            ""
+          )}
         </div>
 
         <div className="div-header">

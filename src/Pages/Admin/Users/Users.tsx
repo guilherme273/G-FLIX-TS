@@ -4,16 +4,14 @@ import StatCard from "../../../Components/Admin/Common/StartCard/StartCard";
 import { Users, Zap } from "lucide-react";
 import { useEffect, useState } from "react";
 import "../../../tailwindStyle.css";
-
 import { ChartData } from "../../../Components/Admin/Chart/Chart";
 import Header from "../../../Components/Admin/Common/Header/Header";
-
 import UsersTable from "../../../Components/Admin/Table/UsersTable";
-
-import { User } from "../../../User/UserInterface";
-import { getUsers } from "../../../User/User.Service";
-import Loading from "../../../Components/Loading/Loading";
-import LineChartComponent from "../../../Components/Admin/LineChart/LineChart";
+import { User } from "../../../Modules/User/UserInterface";
+import { getUsers } from "../../../Modules/User/User.Service";
+import LineChartComponent, {
+  DataLineChart,
+} from "../../../Components/Admin/LineChart/LineChart";
 
 export interface OverViewInterface {
   userscount: number;
@@ -25,23 +23,23 @@ export interface OverViewInterface {
 }
 
 export interface UserGrowthData {
-  month: string;
-  users: number;
+  name: string;
+  value: number;
 }
 
 export interface UserDataPage {
   users: User[];
   count: number;
-  userGrowthData: UserGrowthData[];
+  userGrowthData: DataLineChart[];
   countAdmin: number;
 }
 
 const UsersPage: React.FC = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
   const [usersData, setUsersData] = useState<UserDataPage>();
 
   const fetchUsers = async () => {
     const overview = await getUsers();
+    console.log(overview.userGrowthData);
     setUsersData(overview);
   };
   useEffect(() => {
@@ -59,7 +57,9 @@ const UsersPage: React.FC = () => {
   //   { name: "Sports & Outdoors", value: 1900 },
   // ];
   const userGrowthData = [
-    { month: "Jan", users: 1000 },
+    { day: "01/02", minutesWatched: 1000 },
+    { day: "01/02", minutesWatched: 1000 },
+    { day: "01/02", minutesWatched: 1000 },
     { month: "Feb", users: 1500 },
     { month: "Mar", users: 2000 },
     { month: "Abr", users: 3000 },
@@ -69,10 +69,7 @@ const UsersPage: React.FC = () => {
   return (
     <>
       <div className="flex h-[100%] w-[100%] relative section-overview flex-row">
-        <Sidebar
-          isSidebarOpen={isSidebarOpen}
-          setIsSidebarOpen={setIsSidebarOpen}
-        />
+        <Sidebar />
         <main
           className={`transition-all duration-300 ease-in-out ml-20 p-4 min-h-[100vh] w-[100%]`}
         >

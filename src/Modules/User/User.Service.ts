@@ -1,6 +1,6 @@
-import api from "../Api/Axios";
-import { toast_fy } from "../Utils/Toast/Toast";
-import { RegisterDTO } from "../User/Register.dto";
+import api from "../../Api/Axios";
+import { toast_fy } from "../../Utils/Toast/Toast";
+import { RegisterDTO } from "./Register.dto";
 import { ChangePermissionDTO } from "./ChangePermission.dto";
 
 export const registerUser = async (data: RegisterDTO) => {

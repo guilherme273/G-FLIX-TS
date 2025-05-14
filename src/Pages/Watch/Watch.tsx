@@ -6,7 +6,7 @@ import GeneralSection from "../../Components/GeneralSection/GeneralSection";
 import Header from "../../Components/Header/Header";
 import Reactions from "../../Components/Reactions/Reactions";
 import "./WatchStyle.css";
-import { addOrRemoveToFavorites } from "../../Favorites/Favorites.service";
+import { addOrRemoveToFavorites } from "../../Modules/Favorites/Favorites.service";
 import { useAuth } from "../../Contexts/Auth/UseAuth";
 import { useMovies } from "../../Contexts/Movies/useMovies";
 import Loading from "../../Components/Loading/Loading";

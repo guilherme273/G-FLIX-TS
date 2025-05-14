@@ -1,7 +1,7 @@
 import { createContext } from "react";
 import { Movie, Movies } from "./MovieInterface";
-import { Reaction } from "../../Reactions/ReactionsInterface";
-import { Favorites } from "../../Favorites/FavoritesInterface";
+import { Reaction } from "../../Modules/Reactions/ReactionsInterface";
+import { Favorites } from "../../Modules/Favorites/FavoritesInterface";
 
 interface MoviesContextType {
   movies: Movies[];

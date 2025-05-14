@@ -1,7 +1,7 @@
 import { AtSign, LockKeyhole } from "lucide-react";
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { LoginDTO } from "../../../User/Login.dto";
+import { LoginDTO } from "../../../Modules/User/Login.dto";
 import InputAuth from "../InputAuth/InputAuth";
 import "./FormLoginStyle.css";
 import SubmitButton from "../SubmitButton/SubmitButton";

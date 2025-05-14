@@ -1,27 +1,30 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Pencil, Plus, Search, Trash2 } from "lucide-react";
-import { MovieTable } from "../../../Contexts/Movies/MovieInterface";
-import { delMovie } from "../../../Contexts/Movies/Movie.service";
+import { Plus, Search, Trash2 } from "lucide-react";
+import {
+  CategoryPage,
+  MovieToCategoryPage,
+} from "../../../Modules/Categories/CategoriesInterface";
+import { delCategory } from "../../../Modules/Categories/Categories.service";
 import Loading from "../../Loading/Loading";
 import Confirm from "../../Confirm/Confirm";
 import Modal from "../../Modal/Modal";
-import FormAddMovie from "../Forms/Movies/FormAddMovie";
-import FormUpdateMovie from "../Forms/Movies/FormUpdateMovie";
+import FormAddCategory from "../Forms/Category/FormAddCategory";
 
 interface TableProps {
-  movies: MovieTable[] | undefined;
-  fetchMovies: () => Promise<void>;
+  categories: CategoryPage[] | undefined;
+  fetchCategories: () => Promise<void>;
 }
 
-const MoviesTable: React.FC<TableProps> = ({ movies, fetchMovies }) => {
+const CategoriesTable: React.FC<TableProps> = ({
+  categories,
+  fetchCategories,
+}) => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredMovies, setFilteredMovies] = useState<MovieTable[]>();
+  const [filteredCategoryes, setFilteredCategoryes] =
+    useState<CategoryPage[]>();
   const [openConfirmDel, setOpenConfirmDel] = useState<boolean>(false);
-  const [movieToDelete, setMovieToDelete] = useState<number | null>(null);
-  const [movieToUpdate, setmovieToUpdate] = useState<MovieTable | null>(null);
-  const [isOpenModalUpdateMovie, setIsOpenModalUpdateMovie] =
-    useState<boolean>(false);
+  const [categoryToDelete, setCategoryToDelete] = useState<number | null>(null);
 
   const [isOpenModalRegister, setIsOpenModalRegister] =
     useState<boolean>(false);
@@ -29,32 +32,35 @@ const MoviesTable: React.FC<TableProps> = ({ movies, fetchMovies }) => {
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const term = e.target.value.toLowerCase();
     setSearchTerm(term);
-    const filtered = movies?.filter((movie: MovieTable) =>
-      movie.title.toLowerCase().includes(term)
+    const filtered = categories?.filter((category: CategoryPage) =>
+      category.name.toLowerCase().includes(term)
     );
-    setFilteredMovies(filtered);
+    setFilteredCategoryes(filtered);
   };
 
   useEffect(() => {
-    setFilteredMovies(movies);
-  }, [movies]);
+    setFilteredCategoryes(categories);
+  }, [categories]);
 
-  const deleteMovie = (movie_id: number) => {
-    setMovieToDelete(movie_id);
+  const deleteCategory = (category_id: number) => {
+    setCategoryToDelete(category_id);
     setOpenConfirmDel(true);
   };
 
   const handleDeleteConfirm = async () => {
-    if (movieToDelete !== null) {
-      await delMovie(movieToDelete);
-      setMovieToDelete(null);
-      await fetchMovies();
+    if (categoryToDelete !== null) {
+      await delCategory(categoryToDelete);
+      setCategoryToDelete(null);
+      await fetchCategories();
     }
   };
 
-  const uptadeMovie = (movie: MovieTable) => {
-    setmovieToUpdate(movie);
-    setIsOpenModalUpdateMovie(true);
+  const getTotalViews = (movies: MovieToCategoryPage[]) => {
+    let total: number = 0;
+    movies.forEach((movie) => {
+      total += movie.views.length;
+    });
+    return total;
   };
 
   return (
@@ -65,7 +71,7 @@ const MoviesTable: React.FC<TableProps> = ({ movies, fetchMovies }) => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
       >
-        {movies ? (
+        {categories ? (
           <>
             <div className="flex flex-col gap-4 mb-6 sm:flex-row sm:items-center sm:justify-between">
               <div className="relative w-full sm:w-auto">
@@ -86,7 +92,9 @@ const MoviesTable: React.FC<TableProps> = ({ movies, fetchMovies }) => {
                 <button onClick={() => setIsOpenModalRegister(true)}>
                   <Plus className="w-[35px] h-[35px] text-lime-500 hover:text-lime-600" />
                 </button>
-                <strong className="text-gray-200">Adicionar Novo Filme</strong>
+                <strong className="text-gray-200">
+                  Adicionar Nova Categoria
+                </strong>
               </div>
             </div>
 
@@ -95,89 +103,64 @@ const MoviesTable: React.FC<TableProps> = ({ movies, fetchMovies }) => {
                 <thead>
                   <tr>
                     <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-400 uppercase">
-                      Title
+                      id
                     </th>
                     <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-400 uppercase">
-                      Categoria
+                      Nome
                     </th>
                     <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-400 uppercase">
-                      Total de visualisações
+                      Data de criação
                     </th>
                     <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-400 uppercase">
-                      Total de Reações
+                      Filmes Relacionados
                     </th>
                     <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-400 uppercase">
-                      Favoritado por
+                      Visualizações
                     </th>
                   </tr>
                 </thead>
 
                 <tbody className="divide-y divide-gray-700">
-                  {filteredMovies?.map((movie: MovieTable) => (
+                  {filteredCategoryes?.map((category: CategoryPage) => (
                     <motion.tr
-                      key={movie.id}
+                      key={category.id}
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ duration: 0.3 }}
                     >
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="flex items-center">
-                          <div className="flex-shrink-0 w-10 h-10">
-                            <div className="flex items-center justify-center w-10 h-10 font-semibold text-white rounded-full bg-gradient-to-r from-purple-400 to-blue-500">
-                              <img
-                                src={`${movie.cover}`}
-                                alt=""
-                                className="object-cover w-full h-full rounded-full"
-                              />
-                            </div>
-                          </div>
-                          <div className="ml-4">
-                            <div
-                              title={movie.title}
-                              className="text-sm font-medium text-gray-100"
-                            >
-                              {movie.title.split(" ").slice(0, 6).join(" ")}
-                            </div>
-                          </div>
+                        <div className="text-sm text-gray-300">
+                          {category.id}
                         </div>
                       </td>
 
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm text-gray-300">
-                          {movie.category.name}
+                          {category.name}
                         </div>
                       </td>
 
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm text-gray-300">
-                          {movie.views.length}
+                          {new Date(category.createdAt).toLocaleDateString(
+                            "pt-BR"
+                          )}
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm text-gray-300">
-                          {movie.reactions.length}
+                          {category.movies.length}
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm text-gray-300">
-                          {`${movie.favorites.length} ${
-                            movie.favorites.length === 1
-                              ? "Usuário"
-                              : "Usuários"
-                          }`}
+                          {getTotalViews(category.movies)}
                         </div>
                       </td>
 
                       <td className="px-6 py-4 text-sm text-gray-300 whitespace-nowrap">
                         <button
-                          onClick={() => uptadeMovie(movie)}
-                          title="Editar"
-                          className="mr-2 text-yellow-400 hover:text-yellow-200"
-                        >
-                          <Pencil />
-                        </button>
-                        <button
-                          onClick={() => deleteMovie(movie.id)}
+                          onClick={() => deleteCategory(category.id)}
                           title="Deletar"
                           className="text-red-400 hover:text-red-300"
                         >
@@ -199,26 +182,17 @@ const MoviesTable: React.FC<TableProps> = ({ movies, fetchMovies }) => {
         <Confirm
           setOpenConfirm={setOpenConfirmDel}
           onConfirm={handleDeleteConfirm}
-          mensagem="Tem certeza que deseja excluir este filme?"
+          mensagem="Tem certeza que deseja excluir esta categoria?"
         />
       )}
       {isOpenModalRegister && (
         <Modal
-          title={"Adicionar Filme"}
-          children={<FormAddMovie fetch={fetchMovies} />}
+          title={"Adicionar Categoria"}
+          children={<FormAddCategory fetch={fetchCategories} />}
           setIsOpenModal={setIsOpenModalRegister}
-        />
-      )}
-      {isOpenModalUpdateMovie && (
-        <Modal
-          title={"Editar Filme"}
-          children={
-            <FormUpdateMovie movie={movieToUpdate} fetch={fetchMovies} />
-          }
-          setIsOpenModal={setIsOpenModalUpdateMovie}
         />
       )}
     </>
   );
 };
-export default MoviesTable;
+export default CategoriesTable;

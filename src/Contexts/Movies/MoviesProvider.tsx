@@ -2,10 +2,10 @@ import { useState } from "react";
 import { MoviesContext } from "./MoviesContext";
 import { Movie, Movies } from "./MovieInterface";
 import { getMovies } from "./Movie.service";
-import { Reaction } from "../../Reactions/ReactionsInterface";
-import { getReactions } from "../../Reactions/Reactions.service";
-import { Favorites } from "../../Favorites/FavoritesInterface";
-import { getFavorites } from "../../Favorites/Favorites.service";
+import { Reaction } from "../../Modules/Reactions/ReactionsInterface";
+import { getReactions } from "../../Modules/Reactions/Reactions.service";
+import { Favorites } from "../../Modules/Favorites/FavoritesInterface";
+import { getFavorites } from "../../Modules/Favorites/Favorites.service";
 import { useAuth } from "../Auth/UseAuth";
 
 export const MoviesProvider = ({ children }: { children: React.ReactNode }) => {

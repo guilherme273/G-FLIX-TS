@@ -2,19 +2,11 @@ import Sidebar from "../../../Components/Admin/Common/SideBar/SideBar";
 import { motion } from "framer-motion";
 import StatCard from "../../../Components/Admin/Common/StartCard/StartCard";
 // import FormAddMovie from "../../../Components/Admin/Movies/FormAddMovie";
-import {
-  BarChart2,
-  Clapperboard,
-  Heart,
-  ShoppingBag,
-  Star,
-  Users,
-  Zap,
-} from "lucide-react";
+import { Clapperboard, Heart, Star, Users } from "lucide-react";
 import { useEffect, useState } from "react";
 import "./OverviewStyle.css";
 import "../../../tailwindStyle.css";
-import { getOverView } from "../../../Admin/Admin.service";
+import { getOverView } from "../../../Modules/Admin/Admin.service";
 import Chart, { ChartData } from "../../../Components/Admin/Chart/Chart";
 import Header from "../../../Components/Admin/Common/Header/Header";
 
@@ -28,7 +20,6 @@ export interface OverViewInterface {
 }
 
 const Overview: React.FC = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
   const [overviewData, setOverviewData] = useState<OverViewInterface>();
 
   const fetchOverview = async () => {
@@ -39,20 +30,10 @@ const Overview: React.FC = () => {
     fetchOverview();
   }, []);
 
-  // const chartData = [
-  //   { name: "Electronics", value: 4500 },
-  //   { name: "Clothing", value: 3200 },
-  //   { name: "Home & Garden", value: 2800 },
-  //   { name: "Books", value: 2100 },
-  //   { name: "Sports & Outdoors", value: 1900 },
-  // ];
   return (
     <>
       <div className="flex h-[100%] w-[100%] relative section-overview flex-row">
-        <Sidebar
-          isSidebarOpen={isSidebarOpen}
-          setIsSidebarOpen={setIsSidebarOpen}
-        />
+        <Sidebar />
         <main
           className={`transition-all duration-300 ease-in-out ml-20 p-4 min-h-[100vh] w-[100%]`}
         >

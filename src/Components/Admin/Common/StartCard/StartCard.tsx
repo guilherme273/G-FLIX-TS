@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { LucideIcon } from "lucide-react";
 import "./StartCardStyle.css";
 import Loading from "../../../Loading/Loading";
+
 interface StartCardProps {
   name: string;
   icon: LucideIcon;

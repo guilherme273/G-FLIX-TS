@@ -1,6 +1,6 @@
 import { createContext } from "react";
 
-import { LoginDTO } from "../../User/Login.dto";
+import { LoginDTO } from "../../Modules/User/Login.dto";
 
 interface AuthContextType {
   login: (data: LoginDTO) => Promise<void>;

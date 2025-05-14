@@ -1,12 +1,12 @@
 import { useForm } from "react-hook-form";
-import { addMovieDto } from "../../../Contexts/Movies/MovieInterface";
 import { Layers, Link } from "lucide-react";
-import { postMovie } from "../../../Contexts/Movies/Movie.service";
 import { useEffect, useState } from "react";
-import { Category } from "../../../Categories/CategoriesInterface";
-import { getCategories } from "../../../Categories/Categories.service";
 import "./FormAddMovieStyle.css";
-import Loading from "../../Loading/Loading";
+import { addMovieDto } from "../../../../Contexts/Movies/MovieInterface";
+import { Category } from "../../../../Modules/Categories/CategoriesInterface";
+import { getCategories } from "../../../../Modules/Categories/Categories.service";
+import { postMovie } from "../../../../Contexts/Movies/Movie.service";
+import Loading from "../../../Loading/Loading";
 
 interface FormAddMovieProps {
   fetch: () => Promise<void>;
@@ -22,12 +22,12 @@ const FormAddMovie: React.FC<FormAddMovieProps> = ({ fetch }) => {
 
   const fetchCategories = async () => {
     const categoryData = await getCategories();
-    setCategories(categoryData);
+    setCategories(categoryData.categories);
   };
 
   useEffect(() => {
     fetchCategories();
-  });
+  }, []);
 
   const addMovie = async (data: addMovieDto) => {
     await postMovie(data);

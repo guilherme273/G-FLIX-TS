@@ -1,8 +1,8 @@
 import { Angry, Heart, Smile, ThumbsDown, ThumbsUp } from "lucide-react";
-import { makeReaction } from "../../Reactions/Reactions.service";
+import { makeReaction } from "../../Modules/Reactions/Reactions.service";
 import { useState } from "react";
 import { useAuth } from "../../Contexts/Auth/UseAuth";
-import { Reaction } from "../../Reactions/ReactionsInterface";
+import { Reaction } from "../../Modules/Reactions/ReactionsInterface";
 import "./Reactions.style.css";
 import { useMovies } from "../../Contexts/Movies/useMovies";
 import { Movie } from "../../Contexts/Movies/MovieInterface";

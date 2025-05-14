@@ -1,17 +1,16 @@
 import {
   BarChart2,
   Clapperboard,
-  DollarSign,
   Menu,
-  Settings,
-  ShoppingCart,
-  TrendingUp,
+  ScanEye,
+  Tags,
   Users,
 } from "lucide-react";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, Links } from "react-router-dom";
 import "./SideBarStyle.css";
+import { useState } from "react";
 
 const SIDEBAR_ITEMS = [
   {
@@ -27,21 +26,24 @@ const SIDEBAR_ITEMS = [
     color: "#8B5CF6",
     href: "/dashboard/movies",
   },
-  { name: "Sales", icon: DollarSign, color: "#10B981", href: "/sales" },
-  { name: "Orders", icon: ShoppingCart, color: "#F59E0B", href: "/orders" },
-  { name: "Analytics", icon: TrendingUp, color: "#3B82F6", href: "/analytics" },
-  { name: "Settings", icon: Settings, color: "#6EE7B7", href: "/settings" },
+  {
+    name: "Categorias",
+    icon: Tags,
+    color: "#10B981",
+    href: "/dashboard/categories",
+  },
+  {
+    name: "Visualizações",
+    icon: ScanEye,
+    color: "#3B82F6",
+    href: "/dashboard/views",
+  },
+  // { name: "Analytics", icon: TrendingUp, color: "#3B82F6", href: "/analytics" },
+  // { name: "Settings", icon: Settings, color: "#6EE7B7", href: "/settings" },
 ];
 
-interface SidebarProps {
-  isSidebarOpen: boolean;
-  setIsSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const Sidebar: React.FC<SidebarProps> = ({
-  isSidebarOpen,
-  setIsSidebarOpen,
-}) => {
+const Sidebar: React.FC = () => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
   return (
     <motion.div
       className={`fixed h-[100vh] z-10 transition-all duration-300 ease-in-out flex-shrink-0 ${
@@ -85,13 +87,17 @@ const Sidebar: React.FC<SidebarProps> = ({
           ))}
         </nav>
         <div className="logo-admin-sidebar">
-          <img
-            src="/assets/logo-g.png"
-            className={
-              isSidebarOpen ? "logo-menu-admin-open" : "logo-menu-admin-closed"
-            }
-            alt=""
-          />
+          <Link to="/">
+            <img
+              src="/assets/logo-g.png"
+              className={
+                isSidebarOpen
+                  ? "logo-menu-admin-open"
+                  : "logo-menu-admin-closed"
+              }
+              alt=""
+            />
+          </Link>
         </div>
       </div>
     </motion.div>

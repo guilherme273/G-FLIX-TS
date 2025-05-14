@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { AuthContext } from "./AuthContext";
 import { loginRequest } from "./AuthService";
-import { LoginDTO } from "../../User/Login.dto";
+import { LoginDTO } from "../../Modules/User/Login.dto";
 import { jwtDecode } from "jwt-decode";
 import { DecodedToken } from "./Jwt";
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {

@@ -1,5 +1,5 @@
-import api from "../Api/Axios";
-import { toast_fy } from "../Utils/Toast/Toast";
+import api from "../../Api/Axios";
+import { toast_fy } from "../../Utils/Toast/Toast";
 import { FavoritesDTO } from "./Favorites.dto";
 
 export const addOrRemoveToFavorites = async (data: FavoritesDTO) => {

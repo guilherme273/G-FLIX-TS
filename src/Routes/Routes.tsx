@@ -1,6 +1,10 @@
+import IsAdmin from "../Guards/IsAdmin";
+import LoggedIn from "../Guards/LoggedIn";
+import CategoriesPage from "../Pages/Admin/Categories/Categories";
 import MoviesPage from "../Pages/Admin/Movies/Movies";
 import Overview from "../Pages/Admin/Overview/Overview";
 import UsersPage from "../Pages/Admin/Users/Users";
+import ViewsPage from "../Pages/Admin/Views/View";
 import Favorites from "../Pages/Favorites/Favorites";
 import Home from "../Pages/Home/Home";
 import Login from "../Pages/Login/Login";
@@ -8,8 +12,6 @@ import NotFound404 from "../Pages/NotFound404/NotFound404";
 import Register from "../Pages/Register/Register";
 import Search from "../Pages/Search/Search";
 import Watch from "../Pages/Watch/Watch";
-import IsAdmin from "../RouteGuards/IsAdmin";
-import LoggedIn from "../RouteGuards/LoggedIn";
 
 export const Routes = [
   {
@@ -87,6 +89,26 @@ export const Routes = [
       {
         path: "",
         element: <MoviesPage />,
+      },
+    ],
+  },
+  {
+    path: "/dashboard/categories",
+    element: <IsAdmin />,
+    children: [
+      {
+        path: "",
+        element: <CategoriesPage />,
+      },
+    ],
+  },
+  {
+    path: "/dashboard/views",
+    element: <IsAdmin />,
+    children: [
+      {
+        path: "",
+        element: <ViewsPage />,
       },
     ],
   },

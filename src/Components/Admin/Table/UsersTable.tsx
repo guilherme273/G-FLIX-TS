@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Pencil, Plus, Search, Trash2 } from "lucide-react";
-import { User } from "../../../User/UserInterface";
-import Confirm from "../../Confirm/Confirm";
-import { delUser } from "../../../User/User.Service";
-import Modal from "../../Modal/Modal";
-import FormRegister from "../../Forms/FormRegister/FormRegister";
-import FormChangePermission from "../Forms/FormChangePermission/FormChangePermission copy";
+import { User } from "../../../Modules/User/UserInterface";
+import { delUser } from "../../../Modules/User/User.Service";
 import Loading from "../../Loading/Loading";
+import Confirm from "../../Confirm/Confirm";
+import Modal from "../../Modal/Modal";
+import FormChangePermission from "../Forms/FormChangePermission/FormChangePermission";
+import FormRegister from "../../Forms/FormRegister/FormRegister";
 
 interface TableProps {
   users: User[] | undefined;
@@ -22,7 +22,7 @@ export interface UserChange {
 const UsersTable: React.FC<TableProps> = ({ users, fetchUsers }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredUsers, setFilteredUsers] = useState(users);
-  const [openConfirmDel, seOpenConfirmDel] = useState<boolean>(false);
+  const [openConfirmDel, setOpenConfirmDel] = useState<boolean>(false);
   const [userToDelete, setUserToDelete] = useState<number | null>(null);
   const [userToChangePermission, setUserToChangePermission] =
     useState<UserChange | null>(null);
@@ -46,9 +46,9 @@ const UsersTable: React.FC<TableProps> = ({ users, fetchUsers }) => {
   useEffect(() => {
     setFilteredUsers(users);
   }, [users]);
-  const deletUser = (user_id: number) => {
+  const deleteUser = (user_id: number) => {
     setUserToDelete(user_id);
-    seOpenConfirmDel(true);
+    setOpenConfirmDel(true);
   };
 
   const handleDeleteConfirm = async () => {
@@ -63,7 +63,6 @@ const UsersTable: React.FC<TableProps> = ({ users, fetchUsers }) => {
     user_name: string,
     type: number
   ) => {
-    console.log(user_id, user_name);
     const newUser: UserChange = { id: user_id, name: user_name, type: type };
     setUserToChangePermission(newUser);
     setIsOpenModalChangePermission(true);
@@ -175,7 +174,7 @@ const UsersTable: React.FC<TableProps> = ({ users, fetchUsers }) => {
                           <Pencil />
                         </button>
                         <button
-                          onClick={() => deletUser(user.id)}
+                          onClick={() => deleteUser(user.id)}
                           title="Deletar"
                           className="text-red-400 hover:text-red-300"
                         >
@@ -195,7 +194,7 @@ const UsersTable: React.FC<TableProps> = ({ users, fetchUsers }) => {
 
       {openConfirmDel && (
         <Confirm
-          setOpenConfirm={seOpenConfirmDel}
+          setOpenConfirm={setOpenConfirmDel}
           onConfirm={handleDeleteConfirm}
           mensagem="Tem certeza que deseja excluir este usuário?"
         />
