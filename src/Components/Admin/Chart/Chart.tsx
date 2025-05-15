@@ -53,7 +53,7 @@ const Chart: React.FC<ChartProps> = ({ chartData, title }) => {
                     `${name} ${(percent * 100).toFixed(0)}%`
                   }
                 >
-                  {chartData.map((data, index) => (
+                  {chartData.map((_, index) => (
                     <Cell
                       key={`cell-${index}`}
                       fill={COLORS[index % COLORS.length]}
