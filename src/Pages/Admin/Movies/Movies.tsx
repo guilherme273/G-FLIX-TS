@@ -15,6 +15,7 @@ interface MoviesData {
   movies: MovieTable[];
   moviesPerCategory: ChartData[];
   top10MostViewed: MovieTable[];
+  top10MostWatched: MovieTable[];
 }
 
 const MoviesPage: React.FC = () => {
@@ -35,9 +36,9 @@ const MoviesPage: React.FC = () => {
         <main
           className={`transition-all duration-300 ease-in-out ml-20 p-4 min-h-[100vh] w-[100%]`}
         >
-          <Header title={"Movies"} />
+          <Header title={"Filmes"} />
           <motion.div
-            className="grid grid-cols-1 gap-5 mb-8 sm:grid-cols-2 lg:grid-cols-2"
+            className="grid grid-cols-1 gap-5 mb-8 sm:grid-cols-1 lg:grid-cols-1"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
@@ -46,7 +47,21 @@ const MoviesPage: React.FC = () => {
               title="Filmes Por Categoria"
               chartData={moviesData?.moviesPerCategory}
             />
-            <Ranking top10MostViewed={moviesData?.top10MostViewed} />
+          </motion.div>
+          <motion.div
+            className="grid grid-cols-1 gap-5 mb-8 sm:grid-cols-2 lg:grid-cols-2"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+          >
+            <Ranking
+              title="Top 10 Mais Visualizados"
+              top10MostViewed={moviesData?.top10MostViewed}
+            />
+            <Ranking
+              title="Top 10 Com Mais Tempo Assistido"
+              top10MostViewed={moviesData?.top10MostWatched}
+            />
           </motion.div>
           <motion.div
             className="grid grid-cols-1 gap-5 mb-8 sm:grid-cols-1 lg:grid-cols-1"

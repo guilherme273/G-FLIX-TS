@@ -34,7 +34,7 @@ const ViewsPage: React.FC = () => {
         <main
           className={`transition-all duration-300 ease-in-out ml-20 p-4 min-h-[100vh] w-[100%]`}
         >
-          <Header title={"Categorias"} />
+          <Header title={"Visualizações"} />
 
           <motion.div
             className="grid grid-cols-1 gap-5 mb-8 sm:grid-cols-1 lg:grid-cols-2"

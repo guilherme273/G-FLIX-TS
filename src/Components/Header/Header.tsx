@@ -3,7 +3,6 @@ import { useAuth } from "../../Contexts/Auth/UseAuth";
 import {
   AlignJustify,
   Home,
-  KeyRound,
   LayoutDashboard,
   LogOut,
   Search,
@@ -123,10 +122,6 @@ const Header: React.FC = () => {
               )}
 
               <div>
-                <button className="button-menu-user-header">
-                  <KeyRound className="icon-link-header" />
-                  Trocar senha
-                </button>
                 <button
                   className="button-menu-user-header"
                   onClick={() => leave()}

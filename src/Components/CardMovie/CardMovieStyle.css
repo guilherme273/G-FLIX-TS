@@ -91,6 +91,12 @@
   color: white;
   cursor: pointer;
 }
+.icon-favoritos-img {
+  width: 34px;
+  height: 34px;
+  margin-bottom: 3px;
+  cursor: pointer;
+}
 .icon-favoritos:hover {
   color: #fff200;
 }

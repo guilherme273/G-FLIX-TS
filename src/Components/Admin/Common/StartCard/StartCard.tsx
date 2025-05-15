@@ -26,9 +26,9 @@ const StatCard: React.FC<StartCardProps> = ({
           <Icon size={20} className="mr-2" style={{ color }} />
           {name}
         </span>
-        <p className="mt-1 text-3xl font-semibold text-gray-100">
+        <span className="mt-1 text-3xl font-semibold text-gray-100">
           {value ? value : <Loading padding={0} size={15} color="red" />}
-        </p>
+        </span>
       </div>
     </motion.div>
   );

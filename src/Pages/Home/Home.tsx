@@ -3,7 +3,6 @@ import "./HomeStyle.css";
 import Header from "../../Components/Header/Header";
 import GeneralSection from "../../Components/GeneralSection/GeneralSection";
 import Banner from "../../Components/Banner/Banner";
-
 import CategoryesMovie from "../../Components/CategoryesMovies/CategoryesMovie";
 import Loading from "../../Components/Loading/Loading";
 import Footer from "../../Components/Footer/Footer";

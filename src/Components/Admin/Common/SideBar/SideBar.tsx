@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { Link, Links } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./SideBarStyle.css";
 import { useState } from "react";
 

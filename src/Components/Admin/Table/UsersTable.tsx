@@ -1,6 +1,13 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Pencil, Plus, Search, Trash2 } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Pencil,
+  Plus,
+  Search,
+  Trash2,
+} from "lucide-react";
 import { User } from "../../../Modules/User/UserInterface";
 import { delUser } from "../../../Modules/User/User.Service";
 import Loading from "../../Loading/Loading";
@@ -21,16 +28,30 @@ export interface UserChange {
 
 const UsersTable: React.FC<TableProps> = ({ users, fetchUsers }) => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredUsers, setFilteredUsers] = useState(users);
+  const [filteredUsers, setFilteredUsers] = useState(users || []);
   const [openConfirmDel, setOpenConfirmDel] = useState<boolean>(false);
   const [userToDelete, setUserToDelete] = useState<number | null>(null);
   const [userToChangePermission, setUserToChangePermission] =
     useState<UserChange | null>(null);
-
   const [isOpenModalRegister, setIsOpenModalRegister] =
     useState<boolean>(false);
   const [isOpenModalChangePermission, setIsOpenModalChangePermission] =
     useState<boolean>(false);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 9;
+
+  useEffect(() => {
+    if (users) setFilteredUsers(users);
+  }, [users]);
+
+  const paginateUsers = () => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return filteredUsers?.slice(startIndex, endIndex);
+  };
+
+  const totalPages = Math.ceil(filteredUsers.length / itemsPerPage);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const term = e.target.value.toLowerCase();
@@ -40,12 +61,10 @@ const UsersTable: React.FC<TableProps> = ({ users, fetchUsers }) => {
         user.name.toLowerCase().includes(term) ||
         user.email.toLowerCase().includes(term)
     );
-    setFilteredUsers(filtered);
+    setFilteredUsers(filtered || []);
+    setCurrentPage(1);
   };
 
-  useEffect(() => {
-    setFilteredUsers(users);
-  }, [users]);
   const deleteUser = (user_id: number) => {
     setUserToDelete(user_id);
     setOpenConfirmDel(true);
@@ -82,7 +101,7 @@ const UsersTable: React.FC<TableProps> = ({ users, fetchUsers }) => {
               <div className="relative w-full sm:w-auto">
                 <input
                   type="text"
-                  placeholder="Search users..."
+                  placeholder="Buscar usuário..."
                   className="w-full py-2 pl-10 pr-4 text-white placeholder-gray-200 bg-gray-800 rounded-lg sm:w-auto focus:outline-none focus:ring-1 focus:ring-red-500"
                   value={searchTerm}
                   onChange={handleSearch}
@@ -123,7 +142,7 @@ const UsersTable: React.FC<TableProps> = ({ users, fetchUsers }) => {
                 </thead>
 
                 <tbody className="divide-y divide-gray-700">
-                  {filteredUsers?.map((user: User) => (
+                  {paginateUsers()?.map((user: User) => (
                     <motion.tr
                       key={user.id}
                       initial={{ opacity: 0 }}
@@ -185,6 +204,27 @@ const UsersTable: React.FC<TableProps> = ({ users, fetchUsers }) => {
                   ))}
                 </tbody>
               </table>
+            </div>
+            <div className="flex justify-center gap-2 mt-4">
+              <button
+                className="px-3 py-1 text-sm text-white bg-gray-700 rounded hover:bg-gray-600 disabled:opacity-50"
+                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+              >
+                <ArrowLeft />
+              </button>
+              <span className="px-2 text-sm text-gray-300">
+                Página {currentPage} de {totalPages}
+              </span>
+              <button
+                className="px-3 py-1 text-sm text-white bg-gray-700 rounded hover:bg-gray-600 disabled:opacity-50"
+                onClick={() =>
+                  setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                }
+                disabled={currentPage === totalPages}
+              >
+                <ArrowRight />
+              </button>
             </div>
           </>
         ) : (

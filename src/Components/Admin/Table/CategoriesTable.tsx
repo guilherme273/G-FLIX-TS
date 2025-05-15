@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Plus, Search, Trash2 } from "lucide-react";
+import { ArrowLeft, ArrowRight, Plus, Search, Trash2 } from "lucide-react";
 import {
   CategoryPage,
   MovieToCategoryPage,
@@ -10,6 +10,7 @@ import Loading from "../../Loading/Loading";
 import Confirm from "../../Confirm/Confirm";
 import Modal from "../../Modal/Modal";
 import FormAddCategory from "../Forms/Category/FormAddCategory";
+import { formatTime } from "../../../Utils/FormatTime";
 
 interface TableProps {
   categories: CategoryPage[] | undefined;
@@ -21,26 +22,37 @@ const CategoriesTable: React.FC<TableProps> = ({
   fetchCategories,
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredCategoryes, setFilteredCategoryes] =
-    useState<CategoryPage[]>();
-  const [openConfirmDel, setOpenConfirmDel] = useState<boolean>(false);
+  const [filteredCategoryes, setFilteredCategoryes] = useState<CategoryPage[]>(
+    []
+  );
+  const [openConfirmDel, setOpenConfirmDel] = useState(false);
   const [categoryToDelete, setCategoryToDelete] = useState<number | null>(null);
+  const [isOpenModalRegister, setIsOpenModalRegister] = useState(false);
 
-  const [isOpenModalRegister, setIsOpenModalRegister] =
-    useState<boolean>(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 9;
+
+  useEffect(() => {
+    if (categories) setFilteredCategoryes(categories);
+  }, [categories]);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const term = e.target.value.toLowerCase();
     setSearchTerm(term);
-    const filtered = categories?.filter((category: CategoryPage) =>
+    const filtered = categories?.filter((category) =>
       category.name.toLowerCase().includes(term)
     );
-    setFilteredCategoryes(filtered);
+    setFilteredCategoryes(filtered || []);
+    setCurrentPage(1);
   };
 
-  useEffect(() => {
-    setFilteredCategoryes(categories);
-  }, [categories]);
+  const paginateCategories = () => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return filteredCategoryes?.slice(startIndex, endIndex);
+  };
+
+  const totalPages = Math.ceil(filteredCategoryes.length / itemsPerPage);
 
   const deleteCategory = (category_id: number) => {
     setCategoryToDelete(category_id);
@@ -55,12 +67,17 @@ const CategoriesTable: React.FC<TableProps> = ({
     }
   };
 
-  const getTotalViews = (movies: MovieToCategoryPage[]) => {
-    let total: number = 0;
-    movies.forEach((movie) => {
-      total += movie.views.length;
-    });
-    return total;
+  const getTotalViews = (movies: MovieToCategoryPage[]) =>
+    movies.reduce((total, movie) => total + movie.views.length, 0);
+
+  const getTime = (movies: MovieToCategoryPage[]) => {
+    const totalSeconds = movies.reduce(
+      (sum, movie) =>
+        sum +
+        movie.views.reduce((vSum, view) => vSum + view.seconds_watched, 0),
+      0
+    );
+    return formatTime(totalSeconds);
   };
 
   return (
@@ -77,7 +94,7 @@ const CategoriesTable: React.FC<TableProps> = ({
               <div className="relative w-full sm:w-auto">
                 <input
                   type="text"
-                  placeholder="Search users..."
+                  placeholder="Buscar categoria..."
                   className="w-full py-2 pl-10 pr-4 text-white placeholder-gray-200 bg-gray-800 rounded-lg sm:w-auto focus:outline-none focus:ring-1 focus:ring-red-500"
                   value={searchTerm}
                   onChange={handleSearch}
@@ -102,62 +119,55 @@ const CategoriesTable: React.FC<TableProps> = ({
               <table className="min-w-full divide-y divide-gray-700">
                 <thead>
                   <tr>
-                    <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-400 uppercase">
-                      id
-                    </th>
-                    <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-400 uppercase">
-                      Nome
-                    </th>
-                    <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-400 uppercase">
-                      Data de criação
-                    </th>
-                    <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-400 uppercase">
-                      Filmes Relacionados
-                    </th>
-                    <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-400 uppercase">
-                      Visualizações
-                    </th>
+                    {[
+                      "Nome",
+                      "Criado em",
+                      "Filmes",
+                      "Visualizações",
+                      "Tempo Assistido",
+                      "Ações",
+                    ].map((header) => (
+                      <th
+                        key={header}
+                        className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-400 uppercase"
+                      >
+                        {header}
+                      </th>
+                    ))}
+                    <th className="px-6 py-3" />
                   </tr>
                 </thead>
 
                 <tbody className="divide-y divide-gray-700">
-                  {filteredCategoryes?.map((category: CategoryPage) => (
+                  {paginateCategories()?.map((category) => (
                     <motion.tr
                       key={category.id}
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ duration: 0.3 }}
                     >
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-300">
-                          {category.id}
-                        </div>
+                      <td className="px-6 py-4 text-sm text-gray-300 whitespace-nowrap">
+                        {category.name}
                       </td>
-
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-300">
-                          {category.name}
-                        </div>
+                      <td className="px-6 py-4 text-sm text-gray-300 whitespace-nowrap">
+                        {new Date(category.createdAt).toLocaleDateString(
+                          "pt-BR",
+                          {
+                            day: "2-digit",
+                            month: "2-digit",
+                            year: "numeric",
+                          }
+                        )}
                       </td>
-
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-300">
-                          {new Date(category.createdAt).toLocaleDateString(
-                            "pt-BR"
-                          )}
-                        </div>
+                      <td className="px-6 py-4 text-sm text-gray-300 whitespace-nowrap">
+                        {category.movies.length}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-300">
-                          {category.movies.length}
-                        </div>
+                      <td className="px-6 py-4 text-sm text-gray-300 whitespace-nowrap">
+                        {getTotalViews(category.movies)}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-300">
-                          {getTotalViews(category.movies)}
-                        </div>
+                      <td className="px-6 py-4 text-sm text-gray-300 whitespace-nowrap">
+                        {getTime(category.movies)}
                       </td>
-
                       <td className="px-6 py-4 text-sm text-gray-300 whitespace-nowrap">
                         <button
                           onClick={() => deleteCategory(category.id)}
@@ -172,6 +182,27 @@ const CategoriesTable: React.FC<TableProps> = ({
                 </tbody>
               </table>
             </div>
+            <div className="flex justify-center gap-2 mt-4">
+              <button
+                className="px-3 py-1 text-sm text-white bg-gray-700 rounded hover:bg-gray-600 disabled:opacity-50"
+                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+              >
+                <ArrowLeft />
+              </button>
+              <span className="px-2 text-sm text-gray-300">
+                Página {currentPage} de {totalPages}
+              </span>
+              <button
+                className="px-3 py-1 text-sm text-white bg-gray-700 rounded hover:bg-gray-600 disabled:opacity-50"
+                onClick={() =>
+                  setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                }
+                disabled={currentPage === totalPages}
+              >
+                <ArrowRight />
+              </button>
+            </div>
           </>
         ) : (
           <Loading color="red" size={50} padding={10} />
@@ -185,14 +216,17 @@ const CategoriesTable: React.FC<TableProps> = ({
           mensagem="Tem certeza que deseja excluir esta categoria?"
         />
       )}
+
       {isOpenModalRegister && (
         <Modal
           title={"Adicionar Categoria"}
-          children={<FormAddCategory fetch={fetchCategories} />}
           setIsOpenModal={setIsOpenModalRegister}
-        />
+        >
+          <FormAddCategory fetch={fetchCategories} />
+        </Modal>
       )}
     </>
   );
 };
+
 export default CategoriesTable;

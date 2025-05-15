@@ -1,6 +1,13 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Pencil, Plus, Search, Trash2 } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Pencil,
+  Plus,
+  Search,
+  Trash2,
+} from "lucide-react";
 import { MovieTable } from "../../../Contexts/Movies/MovieInterface";
 import { delMovie } from "../../../Contexts/Movies/Movie.service";
 import Loading from "../../Loading/Loading";
@@ -8,6 +15,7 @@ import Confirm from "../../Confirm/Confirm";
 import Modal from "../../Modal/Modal";
 import FormAddMovie from "../Forms/Movies/FormAddMovie";
 import FormUpdateMovie from "../Forms/Movies/FormUpdateMovie";
+import { timeWatchting } from "../../../Utils/FormatTime";
 
 interface TableProps {
   movies: MovieTable[] | undefined;
@@ -16,28 +24,37 @@ interface TableProps {
 
 const MoviesTable: React.FC<TableProps> = ({ movies, fetchMovies }) => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredMovies, setFilteredMovies] = useState<MovieTable[]>();
-  const [openConfirmDel, setOpenConfirmDel] = useState<boolean>(false);
+  const [filteredMovies, setFilteredMovies] = useState<MovieTable[]>([]);
+  const [openConfirmDel, setOpenConfirmDel] = useState(false);
   const [movieToDelete, setMovieToDelete] = useState<number | null>(null);
-  const [movieToUpdate, setmovieToUpdate] = useState<MovieTable | null>(null);
-  const [isOpenModalUpdateMovie, setIsOpenModalUpdateMovie] =
-    useState<boolean>(false);
+  const [movieToUpdate, setMovieToUpdate] = useState<MovieTable | null>(null);
+  const [isOpenModalUpdateMovie, setIsOpenModalUpdateMovie] = useState(false);
+  const [isOpenModalRegister, setIsOpenModalRegister] = useState(false);
 
-  const [isOpenModalRegister, setIsOpenModalRegister] =
-    useState<boolean>(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 9;
+
+  useEffect(() => {
+    if (movies) setFilteredMovies(movies);
+  }, [movies]);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const term = e.target.value.toLowerCase();
     setSearchTerm(term);
-    const filtered = movies?.filter((movie: MovieTable) =>
+    const filtered = movies?.filter((movie) =>
       movie.title.toLowerCase().includes(term)
     );
-    setFilteredMovies(filtered);
+    setFilteredMovies(filtered || []);
+    setCurrentPage(1);
   };
 
-  useEffect(() => {
-    setFilteredMovies(movies);
-  }, [movies]);
+  const paginateMovies = () => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return filteredMovies.slice(startIndex, endIndex);
+  };
+
+  const totalPages = Math.ceil(filteredMovies.length / itemsPerPage);
 
   const deleteMovie = (movie_id: number) => {
     setMovieToDelete(movie_id);
@@ -53,7 +70,7 @@ const MoviesTable: React.FC<TableProps> = ({ movies, fetchMovies }) => {
   };
 
   const uptadeMovie = (movie: MovieTable) => {
-    setmovieToUpdate(movie);
+    setMovieToUpdate(movie);
     setIsOpenModalUpdateMovie(true);
   };
 
@@ -67,12 +84,13 @@ const MoviesTable: React.FC<TableProps> = ({ movies, fetchMovies }) => {
       >
         {movies ? (
           <>
+            {/* Search + Add Button */}
             <div className="flex flex-col gap-4 mb-6 sm:flex-row sm:items-center sm:justify-between">
               <div className="relative w-full sm:w-auto">
                 <input
                   type="text"
-                  placeholder="Search users..."
-                  className="w-full py-2 pl-10 pr-4 text-white placeholder-gray-200 bg-gray-800 rounded-lg sm:w-auto focus:outline-none focus:ring-1 focus:ring-red-500"
+                  placeholder="Buscar Filme..."
+                  className="w-full py-2 pl-10 pr-4 text-white placeholder-gray-200 bg-gray-800 rounded-lg focus:outline-none focus:ring-1 focus:ring-red-500"
                   value={searchTerm}
                   onChange={handleSearch}
                 />
@@ -81,7 +99,6 @@ const MoviesTable: React.FC<TableProps> = ({ movies, fetchMovies }) => {
                   size={18}
                 />
               </div>
-
               <div className="flex flex-row items-center justify-center gap-1">
                 <button onClick={() => setIsOpenModalRegister(true)}>
                   <Plus className="w-[35px] h-[35px] text-lime-500 hover:text-lime-600" />
@@ -90,30 +107,32 @@ const MoviesTable: React.FC<TableProps> = ({ movies, fetchMovies }) => {
               </div>
             </div>
 
+            {/* Table */}
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-700">
                 <thead>
                   <tr>
-                    <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-400 uppercase">
-                      Title
-                    </th>
-                    <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-400 uppercase">
-                      Categoria
-                    </th>
-                    <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-400 uppercase">
-                      Total de visualisações
-                    </th>
-                    <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-400 uppercase">
-                      Total de Reações
-                    </th>
-                    <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-400 uppercase">
-                      Favoritado por
-                    </th>
+                    {[
+                      "Title",
+                      "Categoria",
+                      "Visualizações",
+                      "Reações",
+                      "Favoritado por",
+                      "Tempo Assistido",
+                      "Ações",
+                    ].map((header) => (
+                      <th
+                        key={header}
+                        className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-400 uppercase"
+                      >
+                        {header}
+                      </th>
+                    ))}
+                    <th className="px-6 py-3" />
                   </tr>
                 </thead>
-
                 <tbody className="divide-y divide-gray-700">
-                  {filteredMovies?.map((movie: MovieTable) => (
+                  {paginateMovies().map((movie) => (
                     <motion.tr
                       key={movie.id}
                       initial={{ opacity: 0 }}
@@ -122,52 +141,35 @@ const MoviesTable: React.FC<TableProps> = ({ movies, fetchMovies }) => {
                     >
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
-                          <div className="flex-shrink-0 w-10 h-10">
-                            <div className="flex items-center justify-center w-10 h-10 font-semibold text-white rounded-full bg-gradient-to-r from-purple-400 to-blue-500">
-                              <img
-                                src={`${movie.cover}`}
-                                alt=""
-                                className="object-cover w-full h-full rounded-full"
-                              />
-                            </div>
+                          <div className="w-10 h-10 overflow-hidden rounded-full bg-gradient-to-r from-purple-400 to-blue-500">
+                            <img
+                              src={movie.cover}
+                              alt=""
+                              className="object-cover w-full h-full"
+                            />
                           </div>
-                          <div className="ml-4">
-                            <div
-                              title={movie.title}
-                              className="text-sm font-medium text-gray-100"
-                            >
-                              {movie.title.split(" ").slice(0, 6).join(" ")}
-                            </div>
+                          <div className="ml-4 text-sm font-medium text-gray-100">
+                            {movie.title.split(" ").slice(0, 6).join(" ")}
                           </div>
                         </div>
                       </td>
-
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-300">
-                          {movie.category.name}
-                        </div>
+                      <td className="px-6 py-4 text-sm text-gray-300">
+                        {movie.category.name}
                       </td>
-
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-300">
-                          {movie.views.length}
-                        </div>
+                      <td className="px-6 py-4 text-sm text-gray-300">
+                        {movie.views.length}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-300">
-                          {movie.reactions.length}
-                        </div>
+                      <td className="px-6 py-4 text-sm text-gray-300">
+                        {movie.reactions.length}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-300">
-                          {`${movie.favorites.length} ${
-                            movie.favorites.length === 1
-                              ? "Usuário"
-                              : "Usuários"
-                          }`}
-                        </div>
+                      <td className="px-6 py-4 text-sm text-gray-300">
+                        {`${movie.favorites.length} ${
+                          movie.favorites.length === 1 ? "Usuário" : "Usuários"
+                        }`}
                       </td>
-
+                      <td className="px-6 py-4 text-sm text-gray-300">
+                        {timeWatchting(movie.views)}
+                      </td>
                       <td className="px-6 py-4 text-sm text-gray-300 whitespace-nowrap">
                         <button
                           onClick={() => uptadeMovie(movie)}
@@ -189,6 +191,28 @@ const MoviesTable: React.FC<TableProps> = ({ movies, fetchMovies }) => {
                 </tbody>
               </table>
             </div>
+
+            <div className="flex justify-center gap-2 mt-4">
+              <button
+                className="px-3 py-1 text-sm text-white bg-gray-700 rounded hover:bg-gray-600 disabled:opacity-50"
+                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+              >
+                <ArrowLeft />
+              </button>
+              <span className="px-2 text-sm text-gray-300">
+                Página {currentPage} de {totalPages}
+              </span>
+              <button
+                className="px-3 py-1 text-sm text-white bg-gray-700 rounded hover:bg-gray-600 disabled:opacity-50"
+                onClick={() =>
+                  setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                }
+                disabled={currentPage === totalPages}
+              >
+                <ArrowRight />
+              </button>
+            </div>
           </>
         ) : (
           <Loading color="red" size={50} padding={10} />
@@ -204,14 +228,14 @@ const MoviesTable: React.FC<TableProps> = ({ movies, fetchMovies }) => {
       )}
       {isOpenModalRegister && (
         <Modal
-          title={"Adicionar Filme"}
+          title="Adicionar Filme"
           children={<FormAddMovie fetch={fetchMovies} />}
           setIsOpenModal={setIsOpenModalRegister}
         />
       )}
       {isOpenModalUpdateMovie && (
         <Modal
-          title={"Editar Filme"}
+          title="Editar Filme"
           children={
             <FormUpdateMovie movie={movieToUpdate} fetch={fetchMovies} />
           }
@@ -221,4 +245,5 @@ const MoviesTable: React.FC<TableProps> = ({ movies, fetchMovies }) => {
     </>
   );
 };
+
 export default MoviesTable;

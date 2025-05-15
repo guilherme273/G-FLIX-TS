@@ -7,8 +7,9 @@ export interface BannerComponentProps {
   images: BannerProps[];
   text?: string;
   movies: Movie[];
-  setMoviesSearch: React.Dispatch<React.SetStateAction<Movie[] | undefined>>;
+  setMoviesSearch: React.Dispatch<React.SetStateAction<Movie[]>>;
   setIsloading: React.Dispatch<React.SetStateAction<boolean>>;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const BannerSearch: React.FC<BannerComponentProps> = ({
@@ -17,6 +18,7 @@ const BannerSearch: React.FC<BannerComponentProps> = ({
   movies,
   setMoviesSearch,
   setIsloading,
+  setCurrentPage,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [inputValue, setInputValue] = useState<string>(text || ""); // valor controlado
@@ -30,6 +32,7 @@ const BannerSearch: React.FC<BannerComponentProps> = ({
     );
     setMoviesSearch(newAllMovies);
     setIsloading(false);
+    setCurrentPage(1);
   };
 
   useEffect(() => {
