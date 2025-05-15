@@ -48,24 +48,6 @@ const UsersPage: React.FC = () => {
   useEffect(() => {
     console.log(usersData);
   }, [usersData]);
-
-  // const chartData = [
-  //   { name: "Electronics", value: 4500 },
-  //   { name: "Clothing", value: 3200 },
-  //   { name: "Home & Garden", value: 2800 },
-  //   { name: "Books", value: 2100 },
-  //   { name: "Sports & Outdoors", value: 1900 },
-  // ];
-  const userGrowthData = [
-    { day: "01/02", minutesWatched: 1000 },
-    { day: "01/02", minutesWatched: 1000 },
-    { day: "01/02", minutesWatched: 1000 },
-    { month: "Feb", users: 1500 },
-    { month: "Mar", users: 2000 },
-    { month: "Abr", users: 3000 },
-    { month: "Mai", users: 4000 },
-    { month: "Jun", users: 5000 },
-  ];
   return (
     <>
       <div className="flex h-[100%] w-[100%] relative section-overview flex-row">
@@ -93,18 +75,6 @@ const UsersPage: React.FC = () => {
               value={usersData?.countAdmin}
               color="#8B5CF6"
             />
-            {/* <StatCard
-              name="Total adicionado aos favoritos"
-              icon={ShoppingBag}
-              value={overviewData?.favoritesCount}
-              color="#EC4899"
-            />
-            <StatCard
-              name="Total de Reações"
-              icon={BarChart2}
-              value={overviewData?.reactionsCount}
-              color="#10B981"
-            /> */}
           </motion.div>
 
           <motion.div
@@ -113,15 +83,6 @@ const UsersPage: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
           >
-            {/* <Chart
-              title="Filmes Por Categoria"
-              chartData={overviewData?.moviesPerCategory}
-            />
-            <Chart
-              title="Visualizações Por Categoria"
-              chartData={overviewData?.viewsPerCategory}
-            /> */}
-            {/* <FormAddMovie /> */}
             <LineChartComponent
               data={usersData?.userGrowthData}
               title={"Crescimento de usuários (Ultimos 12 meses)"}
