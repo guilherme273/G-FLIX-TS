@@ -2,7 +2,7 @@ import axios from "axios";
 import { toast_fy } from "../Utils/Toast/Toast";
 
 const api = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "https://mybackend.eco.br",
 });
 
 api.interceptors.request.use((config) => {
