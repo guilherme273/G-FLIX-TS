@@ -56,7 +56,7 @@ const Search: React.FC = () => {
           {isLoading ? (
             <Loading padding={300} color="red" size={100} />
           ) : moviesSearch?.length === 0 ? (
-            <img src="/public/assets/404.png" alt="" />
+            <img src="/assets/404.png" alt="" />
           ) : (
             <>
               <div className="div-search-movies-paginate">
