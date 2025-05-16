@@ -42,7 +42,7 @@ const MovieWatch: React.FC<MovieProps> = ({ movie }) => {
       }
 
       const token = localStorage.getItem("token");
-      fetch("http://mybackend.eco.br/view", {
+      fetch("https://mybackend.eco.br/view", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
