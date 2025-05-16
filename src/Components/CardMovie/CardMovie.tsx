@@ -48,7 +48,7 @@ const CardMovie: React.FC<CardMovieProps> = ({ movie }) => {
               title="Remover da lista de favoritos"
               onClick={() => addFavorites(movie.id)}
               className="icon-favoritos-img"
-              src="/public/assets/star.png"
+              src="/assets/star.png"
               alt=""
             />
           ) : (

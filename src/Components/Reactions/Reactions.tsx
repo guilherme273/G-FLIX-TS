@@ -122,7 +122,7 @@ const Reactions: React.FC<RactionsProps> = ({ movie }) => {
                 className={`img-reaction-icon${
                   loadingReaction ? " disabled-icon-reaction" : ""
                 }`}
-                src="/public/assets/heart.png"
+                src="/assets/heart.png"
                 alt=""
               />
             ) : (
@@ -150,7 +150,7 @@ const Reactions: React.FC<RactionsProps> = ({ movie }) => {
                 className={`img-reaction-icon${
                   loadingReaction ? " disabled-icon-reaction" : ""
                 }`}
-                src="/public/assets/smile.png"
+                src="/assets/smile.png"
                 alt=""
               />
             ) : (
@@ -178,7 +178,7 @@ const Reactions: React.FC<RactionsProps> = ({ movie }) => {
                 className={`img-reaction-icon${
                   loadingReaction ? " disabled-icon-reaction" : ""
                 }`}
-                src="/public/assets/angry.png"
+                src="/assets/angry.png"
                 alt=""
               />
             ) : (
