@@ -26,7 +26,7 @@
   background-color: rgba(0, 0, 0, 0.575);
   border-radius: 20px;
   transition: transform 0.3s ease;
-  min-height: 320px;
+  min-height: 370px;
   position: relative;
   flex: 0 0 auto; /* Impede que os cards encolham ou cresçam */
 }
